@@ -1,26 +1,22 @@
 package com.rentalhub.dto;
 
-
 import com.rentalhub.model.DrivingLicenseCategory;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.rentalhub.validators.Name;
+import com.rentalhub.validators.PhoneNumber;
 
-import java.time.LocalDateTime;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.Set;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class ClientRegistrationDto {
-    private String login;
-    private String email;
-    private String password;
+public record ClientRegistrationDto(
+        @NotEmpty String login,
+        @Email String email,
+        @Size(min = 8) String password,
+        @Name String firstName,
+        @Name String secondName,
+        @PhoneNumber String phoneNumber,
+        Set<DrivingLicenseCategory> drivingLicenseCategories
+) {
 
-    private String firstName;
-    private String secondName;
-    private String phoneNumber;
-    private Set<DrivingLicenseCategory> drivingLicenseCategories;
 }
