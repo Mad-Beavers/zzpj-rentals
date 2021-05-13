@@ -1,0 +1,3 @@
+spring.jackson.visibility.field: any
+jwt.secret: my_secret_secret
+jwt.validityInMinutes: 20
