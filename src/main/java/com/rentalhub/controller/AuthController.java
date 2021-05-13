@@ -9,7 +9,6 @@ import com.rentalhub.model.User;
 import com.rentalhub.repository.InMemoryUserRepository;
 import com.rentalhub.security.jwt.JwtProvider;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -27,22 +26,20 @@ import static com.rentalhub.common.I18n.USER_NOT_FOUND_ERROR;
 @RequestMapping("/api/auth")
 public class AuthController {
 
-    @Autowired
-    private InMemoryUserRepository inMemoryUserRepository; // todo remove it and instead insert user service
+    private final InMemoryUserRepository inMemoryUserRepository; // todo remove it and instead insert user service
+
+    private final JwtProvider jwtProvider;
+
+    private final ClientMapper clientMapper;
 
     @Autowired
-    private JwtProvider jwtProvider;
-
-    @Autowired
-    private ClientMapper clientMapper;
-
-    @Bean
-    public PasswordEncoder encoder() {
-        return new BCryptPasswordEncoder();
+    public AuthController(InMemoryUserRepository inMemoryUserRepository, JwtProvider jwtProvider, ClientMapper clientMapper) {
+        this.inMemoryUserRepository = inMemoryUserRepository;
+        this.jwtProvider = jwtProvider;
+        this.clientMapper = clientMapper;
     }
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @PostMapping("/register")
     public ResponseEntity<String> registerClient(@RequestBody @Valid ClientRegistrationDto clientRegistrationDto) {
