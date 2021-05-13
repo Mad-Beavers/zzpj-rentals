@@ -9,10 +9,10 @@ import org.springframework.test.context.TestPropertySource;
 import java.util.EnumSet;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@TestPropertySource(locations = "classpath:application.properties")
+@TestPropertySource(locations = "classpath:application.yaml")
 public class ExchangeRatesReceiverTest {
 
     @Autowired
@@ -23,7 +23,7 @@ public class ExchangeRatesReceiverTest {
         Map<AcceptedCurrencies, Double> exchangeRates = exchangeRatesReceiver.getExchangeRates();
 
         for (AcceptedCurrencies currency : EnumSet.allOf(AcceptedCurrencies.class)) {
-            assertTrue(exchangeRates.get(currency) != null);
+            assertNotNull(exchangeRates.get(currency));
         }
     }
 }

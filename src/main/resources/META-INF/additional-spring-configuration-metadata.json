@@ -2,12 +2,18 @@
   "properties": [
     {
       "name": "jwt.validityInMinutes",
-      "type": "java.lang.Long",
-      "description": "Description for jwt.validityInMinutes."
+      "type": "java.lang.Long"
     },
     {
       "name": "jwt.secret",
-      "type": "java.lang.String",
-      "description": "Description for jwt.secret."
+      "type": "java.lang.String"
+    },
+    {
+      "name": "api.key",
+      "type": "java.lang.String"
+    },
+    {
+      "name": "currency.api.uri",
+      "type": "java.lang.String"
     }
   ] }
