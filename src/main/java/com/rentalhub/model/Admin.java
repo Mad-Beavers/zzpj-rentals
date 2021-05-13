@@ -1,15 +1,22 @@
 package com.rentalhub.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class Admin extends User {
+    public Admin() {
+    }
+
+    public Admin(Long id, String passwordHash, String login, String email) {
+        super(id, passwordHash, login, email);
+    }
+
+    public Admin(String passwordHash, String login, String email) {
+        super(passwordHash, login, email);
+    }
+
     @Override
     public AccessLevel getAccessLevel() {
         return AccessLevel.ROLE_ADMIN;
