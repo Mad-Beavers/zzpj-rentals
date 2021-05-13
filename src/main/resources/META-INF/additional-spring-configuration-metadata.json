@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "jwt.validityInMinutes",
+      "type": "java.lang.Long",
+      "description": "Description for jwt.validityInMinutes."
+    },
+    {
+      "name": "jwt.secret",
+      "type": "java.lang.String",
+      "description": "Description for jwt.secret."
+    }
+  ] }

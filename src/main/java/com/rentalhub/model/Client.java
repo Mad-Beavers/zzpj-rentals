@@ -1,31 +1,25 @@
 package com.rentalhub.model;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.Id;
 import javax.persistence.PrePersist;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 import java.util.Set;
 
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class Client extends User {
-
     private String firstName;
-
     private String secondName;
-
     private String phoneNumber;
-
     private LocalDateTime registrationDate;
-
     private Boolean active;
-
     private Set<DrivingLicenseCategory> drivingLicenseCategories;
-
-    public Client() {
-    }
 
     public Client(Long id, String passwordHash, String login, String email, String firstName, String secondName, String phoneNumber,
                   LocalDateTime registrationDate, Boolean active, Set<DrivingLicenseCategory> drivingLicenseCategories) {

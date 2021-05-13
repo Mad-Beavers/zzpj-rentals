@@ -7,22 +7,26 @@ import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 @Component
 @Log
 public class JwtProvider {
 
-    @Value("$(jwt.secret)")
+    @Value("${jwt.secret}")
     private String jwtSecret;
 
+    @Value("${jwt.validityInMinutes}")
+    private long validityInMinutes;
+
     public String generateToken(String login) {
-        Date date = Date.from(LocalDate.now().plusDays(15).atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date expirationDate = Date.from(Instant.now().plus(validityInMinutes, ChronoUnit.MINUTES));
+
         return Jwts.builder()
                 .setSubject(login)
-                .setExpiration(date)
+                .setExpiration(expirationDate)
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
     }

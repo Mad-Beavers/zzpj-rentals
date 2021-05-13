@@ -1,19 +1,8 @@
 package com.rentalhub.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.rentalhub.validators.Login;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class AuthRequestDto {
-    @NotEmpty
-    private String login;
-    @NotEmpty
-    private String password;
+public record AuthRequestDto(@Login String login, @Size(min = 8) String password) {
 }

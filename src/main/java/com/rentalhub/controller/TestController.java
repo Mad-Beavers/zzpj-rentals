@@ -1,12 +1,9 @@
 package com.rentalhub.controller;
 
-import com.rentalhub.dto.ClientRegistrationDto;
-import com.rentalhub.model.Client;
-import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/test")

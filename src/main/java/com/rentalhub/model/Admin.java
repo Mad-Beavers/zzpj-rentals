@@ -1,13 +1,12 @@
 package com.rentalhub.model;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 
 @Getter
 @Setter
 public class Admin extends User {
-    public Admin() {
-    }
 
     public Admin(Long id, String passwordHash, String login, String email) {
         super(id, passwordHash, login, email);
