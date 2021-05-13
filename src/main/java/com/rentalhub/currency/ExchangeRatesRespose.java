@@ -1,6 +1,6 @@
 package com.rentalhub.currency;
 
-import lombok.*;
+import lombok.Getter;
 
 import java.util.Map;
 
