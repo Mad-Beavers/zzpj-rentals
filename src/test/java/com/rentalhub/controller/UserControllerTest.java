@@ -1,26 +1,19 @@
 package com.rentalhub.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rentalhub.dto.AuthRequestDto;
 import com.rentalhub.dto.ClientDto;
 import com.rentalhub.dto.ClientRegistrationDto;
 import com.rentalhub.model.DrivingLicenseCategory;
-import com.rentalhub.model.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import javax.print.attribute.standard.Media;
 import java.util.Set;
 
-import static com.rentalhub.security.jwt.JwtFilter.AUTHORIZATION;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -45,7 +38,7 @@ class UserControllerTest {
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isAccepted());
 
-        mvc.perform(get("/api/user/getUser")
+        mvc.perform(get("/api/user/getClient")
                 .contentType(MediaType.APPLICATION_JSON).content("alek").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value("Lolek"))
@@ -70,7 +63,7 @@ class UserControllerTest {
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
-        mvc.perform(get("/api/user/getUser")
+        mvc.perform(get("/api/user/getClient")
                 .contentType(MediaType.APPLICATION_JSON).content("tolek").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.active").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.active").value(false));
@@ -91,7 +84,7 @@ class UserControllerTest {
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
-        mvc.perform(get("/api/user/getUser")
+        mvc.perform(get("/api/user/getClient")
                 .contentType(MediaType.APPLICATION_JSON).content("kalek").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.active").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.active").value(false));
@@ -109,7 +102,7 @@ class UserControllerTest {
                 .andExpect(status().isAccepted());
 
 
-        mvc.perform(get("/api/user/getUser")
+        mvc.perform(get("/api/user/getClient")
                 .contentType(MediaType.APPLICATION_JSON).content("tolek").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value("Lolek"));
@@ -122,7 +115,7 @@ class UserControllerTest {
                 .andExpect(status().isOk());
 
 
-        mvc.perform(get("/api/user/getUser")
+        mvc.perform(get("/api/user/getClient")
                 .contentType(MediaType.APPLICATION_JSON).content("tolek").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value("Tolek"));

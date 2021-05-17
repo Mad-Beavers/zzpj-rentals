@@ -18,24 +18,27 @@ public class VehicleService {
         this.vehicleRepository = vehicleRepository;
     }
 
-    public void addVehicle(Vehicle vehicle) {
-        vehicleRepository.save(vehicle);
+    public Vehicle addVehicle(Vehicle vehicle) {
+        return vehicleRepository.save(vehicle);
     }
 
-    public void editVehicle(Vehicle vehicle) {
+    public Vehicle editVehicle(Vehicle vehicle) {
         Optional<Vehicle> optionalVehicle = vehicleRepository.findByVin(vehicle.getVin());
         if (optionalVehicle.isPresent()) {
             vehicle.setId(optionalVehicle.get().getId());
-            vehicleRepository.save(vehicle);
+            return vehicleRepository.save(vehicle);
         }
+        return null;
     }
 
-    public void changeAvailability(String vin, boolean available) {
+    public Vehicle changeAvailability(String vin, boolean available) {
         Optional<Vehicle> optionalVehicle = vehicleRepository.findByVin(vin);
         if (optionalVehicle.isPresent()) {
             Vehicle vehicle = optionalVehicle.get();
             vehicle.setAvailable(available);
+            return vehicle;
         }
+        return null;
     }
 
     public Optional<Vehicle> getVehicle(String vin) {

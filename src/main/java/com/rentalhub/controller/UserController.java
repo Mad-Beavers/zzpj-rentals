@@ -24,28 +24,21 @@ public class UserController {
         this.clientMapper = clientMapper;
     }
 
-    @PutMapping("/editClient")
+    @PutMapping("/edit-client")
     public ResponseEntity<Client> editClient(@RequestBody ClientDto clientDto) {
         return ResponseEntity.ok(userService.editClient(clientMapper.toClient(clientDto)));
     }
 
-    @PutMapping("/blockClient")
-    public ResponseEntity<Client> blockClient(@RequestBody String login) {
-        return ResponseEntity.ok(userService.changeClientActivity(login, false));
+    @PutMapping("/change-state/{login}/{newState}")
+    public ResponseEntity<Client> changeState(@PathVariable String login, @PathVariable boolean newState) {
+        return ResponseEntity.ok(userService.changeClientActivity(login, newState));
     }
 
-    @PutMapping("/unblockClient")
-    public ResponseEntity unblock(@RequestBody String login) {
-        userService.changeClientActivity(login, false);
-        return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/getUser")
-    public ResponseEntity<ClientInformationDto> getClient(@RequestBody String login) {
+    @GetMapping("/{login}")
+    public ResponseEntity<ClientInformationDto> getClientByLogin(@RequestBody String login) {
         Optional<Client> clientOptional = userService.getClient(login);
-        return clientOptional.map(client -> ResponseEntity.ok().body(clientMapper.toClientInformationDto(client)))
+        return clientOptional.map(client -> ResponseEntity.ok(clientMapper.toClientInformationDto(client)))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
-
 
 }

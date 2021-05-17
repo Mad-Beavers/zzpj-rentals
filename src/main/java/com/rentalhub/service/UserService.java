@@ -33,11 +33,11 @@ public class UserService {
         return null;
     }
 
-    public Client changeClientActivity(String login, boolean isActive) {
+    public Client changeClientActivity(String login, boolean active) {
         Optional<Client> optionalClient = clientRepository.findByLogin(login);
         if (optionalClient.isPresent()) {
             Client client = optionalClient.get();
-            client.setActive(isActive);
+            client.setActive(active);
             return clientRepository.save(client);
         }
         return null;
