@@ -33,4 +33,25 @@ public class InMemoryUserRepository {
     public void addClient(User user) {
         this.users.add(user);
     }
+
+    public void editUser(Client client) {
+        if(users.removeIf(user1 -> client.getLogin().equals(user1.getLogin()))) {
+            users.add(client);
+        }
+    }
+    public void changeActivity(String login, boolean isActive) {
+        Client client = (Client) users.stream().filter(user -> user.getLogin().equals(login)).findAny().get();
+        client.setActive(isActive);
+    }
+
+
+    public Client getUser(String login) {
+        if(users.stream().anyMatch(user -> user.getLogin().equals(login))) {
+            return (Client) users.stream().filter(user -> user.getLogin().equals(login)).findAny().get();
+        } else {
+            throw new NullPointerException("This user doesn't exists");
+
+        }
+
+    }
 }
