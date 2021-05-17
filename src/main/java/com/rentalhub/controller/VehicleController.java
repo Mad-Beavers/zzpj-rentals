@@ -8,9 +8,7 @@ import com.rentalhub.service.UserService;
 import com.rentalhub.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/vehicle")
@@ -32,25 +30,25 @@ public class VehicleController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/editVehicle")
+    @PutMapping("/editVehicle")
     public ResponseEntity editVehicle(VehicleDto vehicleDto) {
         vehicleService.editVehicle(vehicleMapper.toVehicle(vehicleDto));
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/blockVehicle")
+    @PutMapping("/blockVehicle")
     public ResponseEntity block(String vin) {
         vehicleService.changeAvailability(vin, false);
         return ResponseEntity.ok().build();
     }
-    @PostMapping("/unblockVehicle")
+    @PutMapping("/unblockVehicle")
     public ResponseEntity unblock(String vin) {
         vehicleService.changeAvailability(vin, false);
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/getVehicle")
-    public ResponseEntity getVehicle(String vin) {
-        return ResponseEntity.ok().body(vehicleService.getVehicle(vin));
+    @GetMapping("/getVehicle")
+    public ResponseEntity<VehicleDto> getVehicle(String vin) {
+        return ResponseEntity.ok().body(vehicleMapper.toVehicleDto(vehicleService.getVehicle(vin)));
     }
 }

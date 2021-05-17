@@ -23,7 +23,7 @@ public class UserService {
         inMemoryUserRepository.changeActivity(login, isActive);
     }
 
-    public User getUser(String login) {
+    public Client getClient(String login) {
         return inMemoryUserRepository.getUser(login);
     }
 

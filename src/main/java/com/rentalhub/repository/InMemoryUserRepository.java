@@ -45,9 +45,9 @@ public class InMemoryUserRepository {
     }
 
 
-    public User getUser(String login) {
+    public Client getUser(String login) {
         if(users.stream().anyMatch(user -> user.getLogin().equals(login))) {
-            return users.stream().filter(user -> user.getLogin().equals(login)).findAny().get();
+            return (Client) users.stream().filter(user -> user.getLogin().equals(login)).findAny().get();
         } else {
             throw new NullPointerException("This user doesn't exists");
 

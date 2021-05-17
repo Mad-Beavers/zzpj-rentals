@@ -1,6 +1,7 @@
 package com.rentalhub.mappers;
 
 import com.rentalhub.dto.ClientDto;
+import com.rentalhub.dto.ClientInformationDto;
 import com.rentalhub.dto.ClientRegistrationDto;
 import com.rentalhub.model.Client;
 import org.mapstruct.Mapper;
@@ -9,4 +10,5 @@ import org.mapstruct.Mapper;
 public interface ClientMapper {
     Client toClient(ClientRegistrationDto clientRegistrationDto);
     Client toEditClient(ClientDto clientDto);
+    ClientInformationDto toEditClientInformation(Client client);
 }

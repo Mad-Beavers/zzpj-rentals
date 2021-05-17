@@ -1,13 +1,14 @@
 package com.rentalhub.controller;
 
 import com.rentalhub.dto.ClientDto;
+import com.rentalhub.dto.ClientInformationDto;
 import com.rentalhub.mappers.ClientMapper;
+import com.rentalhub.model.Client;
+import com.rentalhub.model.User;
 import com.rentalhub.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -24,26 +25,26 @@ public class UserController {
         this.clientMapper = clientMapper;
     }
 
-    @PostMapping("/editClient")
-    public ResponseEntity editClient(ClientDto clientDto) {
+    @PutMapping("/editClient")
+    public ResponseEntity editClient(@RequestBody ClientDto clientDto) {
         userService.editClient(clientMapper.toEditClient(clientDto));
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/blockClient")
-    public ResponseEntity block(String login) {
+    @PutMapping("/blockClient")
+    public ResponseEntity block(@RequestBody String login) {
         userService.changeActivity(login, false);
         return ResponseEntity.ok().build();
     }
-    @PostMapping("/unblockClient")
-    public ResponseEntity unblock(String login) {
+    @PutMapping("/unblockClient")
+    public ResponseEntity unblock(@RequestBody String login) {
         userService.changeActivity(login, false);
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/getUser")
-    public ResponseEntity getUser(String login) {
-        return ResponseEntity.ok().body(userService.getUser(login));
+    @GetMapping("/getUser")
+    public ResponseEntity<ClientInformationDto> getClient(@RequestBody String login) {
+        return ResponseEntity.ok().body(clientMapper.toEditClientInformation(userService.getClient(login)));
     }
 
 
