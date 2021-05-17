@@ -3,9 +3,10 @@ package com.rentalhub.dto;
 import com.rentalhub.model.DrivingLicenseCategory;
 
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
 
 public record VehicleDto (
-         String vin,
+         @NotEmpty String vin,
          String brand,
          String model,
          Integer numberOfSeats,
