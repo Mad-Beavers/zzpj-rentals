@@ -1,21 +1,32 @@
 package com.rentalhub.model;
 
-import lombok.AllArgsConstructor;
+import com.rentalhub.validators.Login;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.Email;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
+@MappedSuperclass
+@Inheritance
 public abstract class User {
+
     @Id
+    @GeneratedValue
     private Long id;
+
     private String passwordHash;
+
+    @Login
+    @Column(unique = true)
     private String login;
+
+    @Email
+    @Column(unique = true)
     private String email;
 
     public abstract AccessLevel getAccessLevel();
