@@ -16,6 +16,19 @@ public class Vehicle {
     private String Vin;
     private String brand;
     private String model;
+    private Boolean available;
+    private Integer numberOfSeats;
     private Double engineCapacity;
     private DrivingLicenseCategory dlc;
+
+    public Vehicle(String vin, String brand, String model,
+                   Integer numberOfSeats, Double engineCapacity, DrivingLicenseCategory dlc) {
+        Vin = vin;
+        this.brand = brand;
+        this.model = model;
+        this.available = true;
+        this.numberOfSeats = numberOfSeats;
+        this.engineCapacity = engineCapacity;
+        this.dlc = dlc;
+    }
 }
