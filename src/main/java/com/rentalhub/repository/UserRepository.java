@@ -29,14 +29,19 @@ public class UserRepository {
         return adminRepository.findByLogin(login).map(User.class::cast);
     }
 
+    public User save(User user) {
+        if (user instanceof Client client) {
+            return clientRepository.save(client);
+        }
+
+        if (user instanceof Admin admin) {
+            return adminRepository.save(admin);
+        }
+        return null;
+    }
+
     public void saveAll(Iterable<User> users) {
-        users.forEach(user -> {
-            if (user instanceof Client client) {
-                clientRepository.save(client);
-            } else if (user instanceof Admin admin) {
-                adminRepository.save(admin);
-            }
-        });
+        users.forEach(this::save);
     }
 
 }

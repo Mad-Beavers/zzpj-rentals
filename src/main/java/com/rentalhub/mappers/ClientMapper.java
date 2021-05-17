@@ -9,6 +9,6 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface ClientMapper {
     Client toClient(ClientRegistrationDto clientRegistrationDto);
-    Client toEditClient(ClientDto clientDto);
-    ClientInformationDto toEditClientInformation(Client client);
+    Client toClient(ClientDto clientDto);
+    ClientInformationDto toClientInformationDto(Client client);
 }
