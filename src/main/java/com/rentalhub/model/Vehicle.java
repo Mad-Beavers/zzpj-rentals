@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -13,7 +16,8 @@ import javax.persistence.Id;
 public class Vehicle {
     @Id
     private Long id;
-    private String Vin;
+    @NotEmpty
+    private String vin;
     private String brand;
     private String model;
     private Boolean available;
@@ -23,7 +27,7 @@ public class Vehicle {
 
     public Vehicle(String vin, String brand, String model,
                    Integer numberOfSeats, Double engineCapacity, DrivingLicenseCategory dlc) {
-        this.Vin = vin;
+        this.vin = vin;
         this.brand = brand;
         this.model = model;
         this.available = true;
