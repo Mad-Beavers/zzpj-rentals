@@ -9,6 +9,7 @@ public record VehicleDto (
          @NotEmpty String vin,
          String brand,
          String model,
+         Boolean available,
          Integer numberOfSeats,
          Double engineCapacity,
          DrivingLicenseCategory dlc) {

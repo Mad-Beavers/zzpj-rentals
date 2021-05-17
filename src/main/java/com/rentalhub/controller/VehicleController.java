@@ -43,7 +43,7 @@ public class VehicleController {
     }
     @PutMapping("/unblockVehicle")
     public ResponseEntity unblock(@RequestBody String vin) {
-        vehicleService.changeAvailability(vin, false);
+        vehicleService.changeAvailability(vin, true);
         return ResponseEntity.ok().build();
     }
 

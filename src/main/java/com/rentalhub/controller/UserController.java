@@ -36,7 +36,7 @@ public class UserController {
 
     @PutMapping("/unblockClient")
     public ResponseEntity unblock(@RequestBody String login) {
-        userService.changeClientActivity(login, false);
+        userService.changeClientActivity(login, true);
         return ResponseEntity.ok().build();
     }
 

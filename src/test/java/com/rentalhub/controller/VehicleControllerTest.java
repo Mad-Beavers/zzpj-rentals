@@ -30,7 +30,7 @@ public class VehicleControllerTest {
 
     @Test
     void createTest() throws Exception {
-        VehicleDto vehicleDto = new VehicleDto("3HGCM82633A004352", "Ford", "Mondeo",
+        VehicleDto vehicleDto = new VehicleDto("3HGCM82633A004352", "Ford", "Mondeo",true,
                 4, 2.0, DrivingLicenseCategory.B);
         mvc.perform(post("/api/vehicle/createVehicle")
                 .contentType(MediaType.APPLICATION_JSON).content(asJsonString(vehicleDto))
@@ -42,7 +42,7 @@ public class VehicleControllerTest {
 
     @Test
     void getVehicleTest() throws Exception {
-        VehicleDto vehicleDto = new VehicleDto("4HGCM82633A004352", "Ford", "Mondeo",
+        VehicleDto vehicleDto = new VehicleDto("4HGCM82633A004352", "Ford", "Mondeo",true,
                 4, 2.0, DrivingLicenseCategory.B);
         mvc.perform(post("/api/vehicle/createVehicle")
                 .contentType(MediaType.APPLICATION_JSON).content(asJsonString(vehicleDto))
@@ -57,7 +57,7 @@ public class VehicleControllerTest {
 
     @Test
     void blockTest() throws Exception {
-        VehicleDto vehicleDto = new VehicleDto("5HGCM82633A004352", "Ford", "Mondeo",
+        VehicleDto vehicleDto = new VehicleDto("5HGCM82633A004352", "Ford", "Mondeo",true,
                 4, 2.0, DrivingLicenseCategory.B);
         mvc.perform(post("/api/vehicle/createVehicle")
                 .contentType(MediaType.APPLICATION_JSON).content(asJsonString(vehicleDto))
@@ -77,7 +77,7 @@ public class VehicleControllerTest {
 
     @Test
     void unblockTest() throws Exception {
-        VehicleDto vehicleDto = new VehicleDto("6HGCM82633A004352", "Ford", "Mondeo",
+        VehicleDto vehicleDto = new VehicleDto("6HGCM82633A004352", "Ford", "Mondeo",true,
                 4, 2.0, DrivingLicenseCategory.B);
         mvc.perform(post("/api/vehicle/createVehicle")
                 .contentType(MediaType.APPLICATION_JSON).content(asJsonString(vehicleDto))
@@ -98,7 +98,7 @@ public class VehicleControllerTest {
 
     @Test
     void editTest() throws Exception {
-        VehicleDto vehicleDto = new VehicleDto("7HGCM82633A004352", "Ford", "Mondeo",
+        VehicleDto vehicleDto = new VehicleDto("7HGCM82633A004352", "Ford", "Mondeo",true,
                 4, 2.0, DrivingLicenseCategory.B);
         mvc.perform(post("/api/vehicle/createVehicle")
                 .contentType(MediaType.APPLICATION_JSON).content(asJsonString(vehicleDto))
@@ -112,7 +112,7 @@ public class VehicleControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.brand").value("Ford"));
 
 
-        VehicleDto vehicleEditDto = new VehicleDto("7HGCM82633A004352", "Audi", "Mondeo",
+        VehicleDto vehicleEditDto = new VehicleDto("7HGCM82633A004352", "Audi", "Mondeo",true,
                 4, 2.0, DrivingLicenseCategory.B);
         mvc.perform(put("/api/vehicle/editVehicle")
                 .contentType(MediaType.APPLICATION_JSON).content(asJsonString(vehicleEditDto))
