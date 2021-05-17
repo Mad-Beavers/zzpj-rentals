@@ -23,7 +23,7 @@ public class Vehicle {
 
     public Vehicle(String vin, String brand, String model,
                    Integer numberOfSeats, Double engineCapacity, DrivingLicenseCategory dlc) {
-        Vin = vin;
+        this.Vin = vin;
         this.brand = brand;
         this.model = model;
         this.available = true;

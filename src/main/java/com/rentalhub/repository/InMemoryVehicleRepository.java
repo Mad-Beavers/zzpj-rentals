@@ -40,8 +40,8 @@ public class InMemoryVehicleRepository {
 
 
     public Vehicle getVehicle(String vin) {
-        if(vehicles.stream().anyMatch(vehicle -> vehicle.getVin().equals(vin))) {
-            return vehicles.stream().filter(user -> user.getVin().equals(vin)).findAny().get();
+        if(vehicles.stream().filter(vehicle -> vehicle.getVin().equals(vin)).findAny().isPresent()) {
+            return vehicles.stream().filter(vehicle -> vehicle.getVin().equals(vin)).findAny().get();
         } else {
             throw new NullPointerException("This user doesn't exists");
 
