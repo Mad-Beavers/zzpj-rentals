@@ -1,5 +1,31 @@
-spring.jackson.visibility.field: any
-jwt.secret: my_secret_secret
-jwt.validityInMinutes: 20
+spring:
+  datasource:
+
+    platform: postgres
+    driverClassName: org.postgresql.Driver
+
+    url: jdbc:postgresql://localhost:5432/rentalHub
+    username: rentalHubAdmin
+    password: jajko123
+
+    hikari:
+      connection-timeout: 20000
+      maximum-pool-size: 5
+    initialization-mode: never
+
+  jpa:
+    hibernate:
+      #        ddl-auto: create-drop
+      ddl-auto: none
+
+  jackson:
+    visibility:
+      field: any
+
+jwt:
+  secret: my_secret_secret
+  validityInMinutes: 20
+
 api.key: da1527aa9873cf2261a2c9c132f04e66
 currency.api.uri: http://data.fixer.io/api/latest
+
