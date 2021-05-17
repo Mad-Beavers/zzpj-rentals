@@ -5,7 +5,7 @@ import com.rentalhub.model.DrivingLicenseCategory;
 import javax.persistence.Id;
 
 public record VehicleDto (
-         String Vin,
+         String vin,
          String brand,
          String model,
          Integer numberOfSeats,
