@@ -1,11 +1,10 @@
 package com.rentalhub.repository;
 
-import com.rentalhub.model.*;
+import com.rentalhub.model.DrivingLicenseCategory;
+import com.rentalhub.model.Vehicle;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
 @Component

@@ -2,7 +2,6 @@ package com.rentalhub.dto;
 
 import com.rentalhub.model.DrivingLicenseCategory;
 
-import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
 
 public record VehicleDto (

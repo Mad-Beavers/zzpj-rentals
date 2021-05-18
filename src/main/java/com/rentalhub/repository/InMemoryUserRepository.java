@@ -1,13 +1,9 @@
 package com.rentalhub.repository;
 
-import com.rentalhub.model.Admin;
 import com.rentalhub.model.Client;
-import com.rentalhub.model.DrivingLicenseCategory;
 import com.rentalhub.model.User;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 

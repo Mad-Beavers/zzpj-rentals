@@ -2,11 +2,10 @@ package com.rentalhub.controller;
 
 import com.rentalhub.dto.AuthRequestDto;
 import com.rentalhub.dto.ClientRegistrationDto;
-import com.rentalhub.exception.AppBaseException;
 import com.rentalhub.mappers.ClientMapper;
 import com.rentalhub.model.Client;
 import com.rentalhub.model.User;
-import com.rentalhub.repository.InMemoryUserRepository;
+import com.rentalhub.repository.UserRepository;
 import com.rentalhub.security.jwt.JwtProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 import static com.rentalhub.common.I18n.USER_NOT_FOUND_ERROR;
 
@@ -26,15 +26,15 @@ import static com.rentalhub.common.I18n.USER_NOT_FOUND_ERROR;
 @RequestMapping("/api/auth")
 public class AuthController {
 
-    private final InMemoryUserRepository inMemoryUserRepository; // todo remove it and instead insert user service
+    private final UserRepository userRepository;
 
     private final JwtProvider jwtProvider;
 
     private final ClientMapper clientMapper;
 
     @Autowired
-    public AuthController(InMemoryUserRepository inMemoryUserRepository, JwtProvider jwtProvider, ClientMapper clientMapper) {
-        this.inMemoryUserRepository = inMemoryUserRepository;
+    public AuthController(UserRepository userRepository, JwtProvider jwtProvider, ClientMapper clientMapper) {
+        this.userRepository = userRepository;
         this.jwtProvider = jwtProvider;
         this.clientMapper = clientMapper;
     }
@@ -45,21 +45,22 @@ public class AuthController {
     public ResponseEntity<String> registerClient(@RequestBody @Valid ClientRegistrationDto clientRegistrationDto) {
         Client client = clientMapper.toClient(clientRegistrationDto);
         client.setPasswordHash(passwordEncoder.encode(clientRegistrationDto.password()));
-        inMemoryUserRepository.addClient(client);
+        userRepository.save(client);
         return ResponseEntity.accepted().build();
     }
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody @Valid AuthRequestDto authRequestDto) {
-        try {
-            User user = inMemoryUserRepository.findUserByLogin(authRequestDto.login()).orElseThrow(() -> new AppBaseException(USER_NOT_FOUND_ERROR));
-            if (passwordEncoder.matches(authRequestDto.password(), user.getPasswordHash())) {
-                String token = jwtProvider.generateToken(user.getLogin());
-                return ResponseEntity.accepted().body(token);
-            }
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        } catch (AppBaseException e) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        Optional<User> optionalUser = userRepository.findByLogin(authRequestDto.login());
+        if (optionalUser.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(USER_NOT_FOUND_ERROR);
         }
+
+        User user = optionalUser.get();
+        if (passwordEncoder.matches(authRequestDto.password(), user.getPasswordHash())) {
+            String token = jwtProvider.generateToken(user.getLogin());
+            return ResponseEntity.accepted().body(token);
+        }
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 }

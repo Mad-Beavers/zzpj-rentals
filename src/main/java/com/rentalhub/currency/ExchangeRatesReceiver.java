@@ -11,6 +11,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
+import java.util.Objects;
 
 @Component
 public class ExchangeRatesReceiver {
@@ -40,6 +41,6 @@ public class ExchangeRatesReceiver {
         if (!response.getStatusCode().equals(HttpStatus.OK)) {
             throw new CurrencyServiceException("Unspecified service error");
         }
-        return response.getBody().getRates();
+        return Objects.requireNonNull(response.getBody()).getRates();
     }
 }
