@@ -35,7 +35,7 @@ public class UserController {
     }
 
     @GetMapping("/{login}")
-    public ResponseEntity<ClientInformationDto> getClientByLogin(@RequestBody String login) {
+    public ResponseEntity<ClientInformationDto> getClientByLogin(@PathVariable String login) {
         Optional<Client> clientOptional = userService.getClient(login);
         return clientOptional.map(client -> ResponseEntity.ok(clientMapper.toClientInformationDto(client)))
                 .orElseGet(() -> ResponseEntity.notFound().build());

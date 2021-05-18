@@ -11,11 +11,13 @@ spring:
     hikari:
       connection-timeout: 20000
       maximum-pool-size: 5
+
+#    initialization-mode: always
     initialization-mode: never
 
   jpa:
     hibernate:
-      #        ddl-auto: create-drop
+#      ddl-auto: create-drop
       ddl-auto: none
 
   jackson:
