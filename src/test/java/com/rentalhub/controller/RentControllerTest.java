@@ -29,7 +29,7 @@ public class RentControllerTest {
     void createRentTest() throws Exception {
         LocalDateTime startDate = LocalDateTime.of(2021, 06, 01, 10, 0);
         LocalDateTime endDate = LocalDateTime.of(2021, 07, 01, 10, 0);
-        UUID uuid = UUID.fromString("5cedaf61-a799-45eb-a02f-5f90151ac66a");
+        UUID uuid = UUID.randomUUID();
 
         RentDto dto = new RentDto(uuid, "ABNASDG73FB", "jajko2", startDate, endDate, null);
 
@@ -44,7 +44,7 @@ public class RentControllerTest {
     void createRentWithInvalidVinTest() throws Exception {
         LocalDateTime startDate = LocalDateTime.of(2021, 06, 01, 10, 0);
         LocalDateTime endDate = LocalDateTime.of(2021, 07, 01, 10, 0);
-        UUID uuid = UUID.fromString("5cedaf61-a799-45eb-a02f-5f90151ac66a");
+        UUID uuid = UUID.randomUUID();
 
         RentDto dto = new RentDto(uuid, "INVALID VIN", "jajko2", startDate, endDate, null);
 
@@ -59,7 +59,7 @@ public class RentControllerTest {
     void createRentWithInvalidLoginTest() throws Exception {
         LocalDateTime startDate = LocalDateTime.of(2021, 06, 01, 10, 0);
         LocalDateTime endDate = LocalDateTime.of(2021, 07, 01, 10, 0);
-        UUID uuid = UUID.fromString("5cedaf61-a799-45eb-a02f-5f90151ac66a");
+        UUID uuid = UUID.randomUUID();
 
         RentDto dto = new RentDto(uuid, "ABNASDG73FB", "INVALID LOGIN", startDate, endDate, null);
 
