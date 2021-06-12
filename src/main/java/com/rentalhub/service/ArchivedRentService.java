@@ -5,6 +5,7 @@ import com.rentalhub.repository.ArchivedRentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -20,5 +21,9 @@ public class ArchivedRentService {
 
     public Optional<ArchivedRent> getArchivedRent(UUID uuid) {
         return repository.findByUuid(uuid);
+    }
+
+    public List<ArchivedRent> getArchivedRents() {
+        return repository.findAll();
     }
 }

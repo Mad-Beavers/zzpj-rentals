@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -32,5 +33,11 @@ public class ArchivedRentController {
         Optional<ArchivedRent> result = service.getArchivedRent(UUID.fromString(uuid));
         return result.map(archivedRent -> ResponseEntity.ok().body(mapper.toArchivedRentDto(archivedRent)))
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<ArchivedRentDto>> getArchivedRents() {
+        List<ArchivedRent> result = service.getArchivedRents();
+        return ResponseEntity.ok().body(mapper.toArchivedRentDtoList(result));
     }
 }
