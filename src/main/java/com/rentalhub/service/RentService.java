@@ -31,7 +31,7 @@ public class RentService {
     public Rent addRent(RentDto dto) {
         Optional<Client> client = clientRepository.findByLogin(dto.login());
         Optional<Vehicle> vehicle = vehicleRepository.findByVin(dto.vin());
-        if (!client.isPresent() || !vehicle.isPresent()) {
+        if (client.isEmpty() || vehicle.isEmpty()) {
             throw new RuntimeException();
         }
         Rent rent = new Rent(vehicle.get(), client.get(), dto.startDate(), dto.declaredFinishedDate(), dto.actualFinishedDate());
