@@ -10,6 +10,7 @@ import com.rentalhub.repository.subRepos.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -39,5 +40,9 @@ public class RentService {
 
     public Optional<Rent> getRent(UUID uuid) {
         return rentRepository.findByUuid(uuid);
+    }
+
+    public List<Rent> getRents() {
+        return rentRepository.findAll();
     }
 }

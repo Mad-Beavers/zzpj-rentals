@@ -12,6 +12,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
 import java.util.Optional;
 
 @Mapper(componentModel = "spring")
@@ -23,6 +24,7 @@ public abstract class RentMapper {
     private UserService userService;
 
     public abstract RentDto toRentDto(Rent rent);
+    public abstract List<RentDto> toRentDtoList(List<Rent> rents);
 
     @Mapping(source = "vin", target = "rentedVehicle", qualifiedByName = "vinToVehicle")
     @Mapping(source = "login", target = "client", qualifiedByName = "loginToClient")

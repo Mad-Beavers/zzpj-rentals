@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -38,5 +39,11 @@ public class RentController {
         Optional<Rent> result = service.getRent(UUID.fromString(uuid));
         return result.map(rent -> ResponseEntity.ok().body(mapper.toRentDto(rent)))
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<RentDto>> getRents() {
+        List<Rent> result = service.getRents();
+        return ResponseEntity.ok().body(mapper.toRentDtoList(result));
     }
 }
