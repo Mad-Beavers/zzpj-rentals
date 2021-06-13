@@ -1,10 +1,13 @@
 package com.rentalhub.controller;
 
+import com.rentalhub.currencyService.AcceptedCurrencies;
 import com.rentalhub.dto.RentDto;
+import com.rentalhub.exception.CurrencyServiceException;
 import com.rentalhub.mappers.RentMapper;
 import com.rentalhub.model.Rent;
 import com.rentalhub.service.RentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,5 +48,24 @@ public class RentController {
     public ResponseEntity<List<RentDto>> getRents() {
         List<Rent> result = service.getRents();
         return ResponseEntity.ok().body(mapper.toRentDtoList(result));
+    }
+
+    @DeleteMapping("/close/{uuid}/{currency}")
+    public ResponseEntity<RentDto> endRent(@PathVariable String uuid, @PathVariable String currencyAbbrev) {
+        AcceptedCurrencies currency;
+        try {
+            currency = AcceptedCurrencies.valueOf(currencyAbbrev);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Optional<Rent> result = null;
+        try {
+            result = service.endRent(UUID.fromString(uuid), currency);
+        } catch (CurrencyServiceException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+        return result.map(rent -> ResponseEntity.ok().body(mapper.toRentDto(rent)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

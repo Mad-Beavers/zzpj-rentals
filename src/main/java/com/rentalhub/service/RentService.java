@@ -1,6 +1,8 @@
 package com.rentalhub.service;
 
+import com.rentalhub.currencyService.AcceptedCurrencies;
 import com.rentalhub.dto.RentDto;
+import com.rentalhub.exception.CurrencyServiceException;
 import com.rentalhub.model.Client;
 import com.rentalhub.model.Rent;
 import com.rentalhub.model.Vehicle;
@@ -10,6 +12,7 @@ import com.rentalhub.repository.subRepos.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -18,23 +21,30 @@ import java.util.UUID;
 public class RentService {
 
     private final RentRepository rentRepository;
-    private final VehicleRepository vehicleRepository;
-    private final ClientRepository clientRepository;
+    private final VehicleService vehicleService;
+    private final UserService userService;
+    private final ArchivedRentService archivedRentService;
 
     @Autowired
-    public RentService(RentRepository rentRepository, VehicleRepository vehicleRepository, ClientRepository clientRepository) {
+    public RentService(RentRepository rentRepository, VehicleService vehicleService, UserService userService, ArchivedRentService archivedRentService) {
         this.rentRepository = rentRepository;
-        this.vehicleRepository = vehicleRepository;
-        this.clientRepository = clientRepository;
+        this.vehicleService = vehicleService;
+        this.userService = userService;
+        this.archivedRentService = archivedRentService;
     }
 
     public Rent addRent(RentDto dto) {
-        Optional<Client> client = clientRepository.findByLogin(dto.login());
-        Optional<Vehicle> vehicle = vehicleRepository.findByVin(dto.vin());
+        Optional<Vehicle> vehicle = vehicleService.getVehicle(dto.vin());
+        Optional<Client> client = userService.getClient(dto.login());
         if (client.isEmpty() || vehicle.isEmpty()) {
             throw new RuntimeException();
         }
+        if (vehicle.get().getAvailable() == false) {
+            throw new RuntimeException();
+        }
+        vehicleService.changeAvailability(dto.vin(), false);
         Rent rent = new Rent(vehicle.get(), client.get(), dto.startDate(), dto.declaredFinishedDate(), dto.actualFinishedDate());
+
         return rentRepository.save(rent);
     }
 
@@ -44,5 +54,18 @@ public class RentService {
 
     public List<Rent> getRents() {
         return rentRepository.findAll();
+    }
+
+    public Optional<Rent> endRent(UUID uuid, AcceptedCurrencies currency) throws CurrencyServiceException {
+        Optional<Rent> rent = rentRepository.findByUuid(uuid);
+        if (rent.isPresent()) {
+            archivedRentService.addArchivedRent(rent.get(), currency);
+
+            rent.get().setActualFinishedDate(LocalDateTime.now());
+            rentRepository.save(rent.get());
+
+            vehicleService.changeAvailability(rent.get().getRentedVehicle().getVin(), true);
+        }
+        return rent;
     }
 }
