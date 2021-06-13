@@ -4,8 +4,8 @@ spring:
     platform: postgres
     driverClassName: org.postgresql.Driver
 
-    url: jdbc:postgresql://localhost:5432/rentalHub
-    username: rentalHubAdmin
+    url: jdbc:postgresql://localhost:5432/rental_hub
+    username: rental_hub_admin
     password: jajko123
 
     hikari:

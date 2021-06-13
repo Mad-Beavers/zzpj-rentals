@@ -11,7 +11,7 @@ create table if not exists admins
 );
 
 alter table admins
-    owner to "rentalHubAdmin";
+    owner to "rental-hub-admin";
 
 create table if not exists clients
 (
@@ -33,7 +33,7 @@ create table if not exists clients
 );
 
 alter table clients
-    owner to "rentalHubAdmin";
+    owner to "rental-hub-admin";
 
 create table if not exists clients_driving_license_categories
 (
@@ -44,7 +44,7 @@ create table if not exists clients_driving_license_categories
 );
 
 alter table clients_driving_license_categories
-    owner to "rentalHubAdmin";
+    owner to "rental-hub-admin";
 
 create table if not exists vehicles
 (
@@ -63,7 +63,7 @@ create table if not exists vehicles
 );
 
 alter table vehicles
-    owner to "rentalHubAdmin";
+    owner to "rental-hub-admin";
 
 create table if not exists rents
 (
@@ -85,7 +85,7 @@ create table if not exists rents
 );
 
 alter table rents
-    owner to "rentalHubAdmin";
+    owner to "rental-hub-admin";
 
 create table if not exists archived_rents
 (
@@ -102,5 +102,5 @@ create table if not exists archived_rents
 );
 
 alter table archived_rents
-    owner to "rentalHubAdmin";
+    owner to "rental-hub-admin";
 
