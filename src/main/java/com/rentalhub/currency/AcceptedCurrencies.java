@@ -1,4 +1,4 @@
-package com.rentalhub.currencyService;
+package com.rentalhub.currency;
 
 public enum AcceptedCurrencies {
     EUR,
