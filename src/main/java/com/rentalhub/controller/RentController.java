@@ -65,7 +65,7 @@ public class RentController {
     }
 
     @DeleteMapping("/close/{uuid}/{currencyAbbrev}")
-    public ResponseEntity<RentDto> endRent(@PathVariable String uuid, @PathVariable String currencyAbbrev) {
+    public ResponseEntity<RentDto> endRent(@PathVariable String uuid, @PathVariable String currencyAbbrev) throws NoSuchVehicleException, CurrencyServiceException {
         AcceptedCurrencies currency;
         try {
             currency = AcceptedCurrencies.valueOf(currencyAbbrev);

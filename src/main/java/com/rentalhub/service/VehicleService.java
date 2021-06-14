@@ -1,6 +1,7 @@
 package com.rentalhub.service;
 
 
+import com.rentalhub.exception.NoSuchVehicleException;
 import com.rentalhub.model.Vehicle;
 import com.rentalhub.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,28 +23,33 @@ public class VehicleService {
         return vehicleRepository.save(vehicle);
     }
 
-    public Vehicle editVehicle(Vehicle vehicle) {
+    public Vehicle editVehicle(Vehicle vehicle) throws NoSuchVehicleException {
         Optional<Vehicle> optionalVehicle = vehicleRepository.findByVin(vehicle.getVin());
-        if (optionalVehicle.isPresent()) {
-            vehicle.setId(optionalVehicle.get().getId());
-            return vehicleRepository.save(vehicle);
+
+        if (optionalVehicle.isEmpty()) {
+            throw new NoSuchVehicleException("Vehicle with vin " + vehicle.getVin() + " not found");
         }
-        return null;
+
+        vehicle.setId(optionalVehicle.get().getId());
+        return vehicleRepository.save(vehicle);
+
     }
 
-    public Vehicle changeAvailability(String vin, boolean available) {
+    public Vehicle changeAvailability(String vin, boolean available) throws NoSuchVehicleException {
         Optional<Vehicle> optionalVehicle = vehicleRepository.findByVin(vin);
-        if (optionalVehicle.isPresent()) {
-            Vehicle vehicle = optionalVehicle.get();
-            vehicle.setAvailable(available);
-            return vehicle;
+
+        if (optionalVehicle.isEmpty()) {
+            throw new NoSuchVehicleException("Vehicle with vin " + vin + " not found");
         }
-        return null;
+
+        Vehicle vehicle = optionalVehicle.get();
+        vehicle.setAvailable(available);
+        vehicleRepository.save(vehicle);
+        return vehicle;
     }
 
     public Optional<Vehicle> getVehicle(String vin) {
         return vehicleRepository.findByVin(vin);
     }
-
 
 }

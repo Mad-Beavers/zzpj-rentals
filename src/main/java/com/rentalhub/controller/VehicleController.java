@@ -1,6 +1,7 @@
 package com.rentalhub.controller;
 
 import com.rentalhub.dto.VehicleDto;
+import com.rentalhub.exception.NoSuchVehicleException;
 import com.rentalhub.mappers.VehicleMapper;
 import com.rentalhub.model.Vehicle;
 import com.rentalhub.service.VehicleService;
@@ -30,13 +31,13 @@ public class VehicleController {
     }
 
     @PutMapping("/update-vehicle")
-    public ResponseEntity<Vehicle> editVehicle(@RequestBody VehicleDto vehicleDto) {
+    public ResponseEntity<Vehicle> editVehicle(@RequestBody VehicleDto vehicleDto) throws NoSuchVehicleException {
 
         return ResponseEntity.ok(vehicleService.editVehicle(vehicleMapper.toVehicle(vehicleDto)));
     }
 
     @PutMapping("/change-state/{vin}/{newState}")
-    public ResponseEntity<Vehicle> block(@PathVariable String vin, @PathVariable boolean newState) {
+    public ResponseEntity<Vehicle> block(@PathVariable String vin, @PathVariable boolean newState) throws NoSuchVehicleException {
         return ResponseEntity.ok(vehicleService.changeAvailability(vin, newState));
     }
 

@@ -11,7 +11,6 @@ import java.util.UUID;
 
 @Repository
 public interface RentRepository extends JpaRepository<Rent, Long> {
-    @Query("from rents as r where r.uuid = :uuid")
     Optional<Rent> findByUuid(UUID uuid);
 
     List<Rent> findByClient_Login(String login);
