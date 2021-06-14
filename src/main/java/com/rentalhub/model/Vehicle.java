@@ -14,7 +14,8 @@ import javax.validation.constraints.Positive;
 @Entity(name = "vehicles")
 public class Vehicle {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VEHICLE_SEQUENCE")
+    @SequenceGenerator(name = "VEHICLE_SEQUENCE", sequenceName = "PUBLIC.VEHICLE_SEQUENCE", allocationSize = 1, schema = "PUBLIC")
     private Long id;
 
     @Column(unique = true)

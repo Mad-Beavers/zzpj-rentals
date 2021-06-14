@@ -4,10 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.UUID;
@@ -18,7 +15,8 @@ import java.util.UUID;
 @Entity(name = "archived_rents")
 public class ArchivedRent {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ARCHIVED_RENT_SEQUENCE")
+    @SequenceGenerator(name = "ARCHIVED_RENT_SEQUENCE", sequenceName = "PUBLIC.ARCHIVED_RENT_SEQUENCE", allocationSize = 1, schema = "PUBLIC")
     private Long id;
 
     private UUID uuid;

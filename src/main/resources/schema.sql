@@ -105,3 +105,43 @@ create table if not exists archived_rents
 alter table archived_rents
     owner to "zmdjsbvtocpoyf";
 
+create sequence client_sequence
+    increment by 1;
+
+create sequence admin_sequence
+    increment by 1;
+
+create sequence rent_sequence
+    increment by 1;
+
+create sequence archived_rent_sequence
+    increment by 1;
+
+create sequence vehicle_sequence
+    increment by 1;
+
+alter sequence client_sequence owner to zmdjsbvtocpoyf;
+alter sequence admin_sequence owner to zmdjsbvtocpoyf;
+alter sequence rent_sequence owner to zmdjsbvtocpoyf;
+alter sequence archived_rent_sequence owner to zmdjsbvtocpoyf;
+alter sequence vehicle_sequence owner to zmdjsbvtocpoyf;
+
+ALTER TABLE clients
+    ALTER COLUMN id
+        SET DEFAULT nextval('client_sequence');
+
+ALTER TABLE admins
+    ALTER COLUMN id
+        SET DEFAULT nextval('admin_sequence');
+
+ALTER TABLE rents
+    ALTER COLUMN id
+        SET DEFAULT nextval('rent_sequence');
+
+ALTER TABLE archived_rents
+    ALTER COLUMN id
+        SET DEFAULT nextval('archived_rent_sequence');
+
+ALTER TABLE vehicles
+    ALTER COLUMN id
+        SET DEFAULT nextval('client_sequence');

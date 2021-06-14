@@ -16,6 +16,10 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity(name = "clients")
 public class Client extends User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CLIENT_SEQUENCE")
+    @SequenceGenerator(name = "CLIENT_SEQUENCE", sequenceName = "PUBLIC.CLIENT_SEQUENCE", allocationSize = 1, schema = "PUBLIC")
+    private Long id;
 
     @Name
     private String firstName;

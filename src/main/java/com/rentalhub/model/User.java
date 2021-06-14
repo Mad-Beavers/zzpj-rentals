@@ -14,11 +14,6 @@ import javax.validation.constraints.Email;
 @MappedSuperclass
 @Inheritance
 public abstract class User {
-
-    @Id
-    @GeneratedValue
-    private Long id;
-
     private String passwordHash;
 
     @Login

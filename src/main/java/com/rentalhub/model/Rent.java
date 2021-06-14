@@ -15,7 +15,8 @@ import java.util.UUID;
 @Entity(name = "rents")
 public class Rent {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "RENT_SEQUENCE")
+    @SequenceGenerator(name = "RENT_SEQUENCE", sequenceName = "PUBLIC.RENT_SEQUENCE", allocationSize = 1, schema = "PUBLIC")
     private Long id;
 
     @Column(unique = true)
