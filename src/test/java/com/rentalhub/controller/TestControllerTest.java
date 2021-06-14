@@ -27,7 +27,7 @@ class TestControllerTest {
     @Autowired
     private MockMvc mvc;
 
-
+    @Test
     void testAdminSecuredEndpoint() throws Exception {
         String adminToken = getAdminToken();
         mvc.perform(get("/api/test/admin_test")
@@ -38,7 +38,7 @@ class TestControllerTest {
                 .andExpect(status().isAccepted()).andReturn();
     }
 
-
+    @Test
     void testClientSecuredEndpoint() throws Exception {
         String clientToken = getClientToken();
         mvc.perform(get("/api/test/client_test")
