@@ -27,14 +27,14 @@ VALUES (4, 'T');
 INSERT INTO public.clients_driving_license_categories (clients_id, driving_license_categories)
 VALUES (4, 'B');
 
-INSERT INTO public.vehicles (id, available, brand, dlc, engine_capacity, model, number_of_seats, vin)
-VALUES (5, true, 'Opel', 'B', 1.8, 'Corsa', 5, 'AGJGSKL7381');
-INSERT INTO public.vehicles (id, available, brand, dlc, engine_capacity, model, number_of_seats, vin)
-VALUES (6, true, 'Fiat', 'B', 1.4, 'Punto', 5, 'ABNASDG73FB');
-INSERT INTO public.vehicles (id, available, brand, dlc, engine_capacity, model, number_of_seats, vin)
-VALUES (7, true, 'BetaJulietta', 'B', 0.1, 'MX5', 0, 'FHSKFGJSJK331');
-INSERT INTO public.vehicles (id, available, brand, dlc, engine_capacity, model, number_of_seats, vin)
-VALUES (8, true, 'Lamborghini', 'T', 512, 'Trattori', 58, 'FHSKFGJSJK341');
+INSERT INTO public.vehicles (id, available, brand, dlc, engine_capacity, model, number_of_seats, daily_loan_price, vin)
+VALUES (5, true, 'Opel', 'B', 1.8, 'Corsa', 5, 173.12, 'AGJGSKL7381');
+INSERT INTO public.vehicles (id, available, brand, dlc, engine_capacity, model, number_of_seats, daily_loan_price, vin)
+VALUES (6, true, 'Fiat', 'B', 1.4, 'Punto', 5, 263.50, 'ABNASDG73FB');
+INSERT INTO public.vehicles (id, available, brand, dlc, engine_capacity, model, number_of_seats, daily_loan_price, vin)
+VALUES (7, true, 'BetaJulietta', 'B', 0.1, 'MX5', 0, 3613.15, 'FHSKFGJSJK331');
+INSERT INTO public.vehicles (id, available, brand, dlc, engine_capacity, model, number_of_seats, daily_loan_price, vin)
+VALUES (8, true, 'Lamborghini', 'T', 512, 'Trattori', 58, 500.00, 'FHSKFGJSJK341');
 
 INSERT INTO public.rents (id, actual_finished_date, declared_finished_date, start_date, uuid, client_id,
                           rented_vehicle_id)

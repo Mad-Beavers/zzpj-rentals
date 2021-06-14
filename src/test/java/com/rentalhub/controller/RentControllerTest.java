@@ -7,7 +7,7 @@ import com.rentalhub.repository.ArchivedRentRepository;
 import com.rentalhub.repository.RentRepository;
 import com.rentalhub.repository.VehicleRepository;
 import com.rentalhub.repository.subRepos.ClientRepository;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +56,7 @@ public class RentControllerTest {
     Client testClient = new Client("testHash", "test", "test@test.com", "test",
             "test", "test", Set.of(DrivingLicenseCategory.B));
 
-    Vehicle testVehicle = new Vehicle("testVin", "Ford", "Mustang", 5, 5.0,
+    Vehicle testVehicle = new Vehicle("testVin", "Ford", "Mustang", 5, 5.0, 123.0,
             DrivingLicenseCategory.B);
 
     Rent testRent = new Rent(testVehicle, testClient, startDate, endDate);
@@ -87,7 +87,7 @@ public class RentControllerTest {
         UUID uuid = UUID.randomUUID();
 
         Vehicle testVehicle = new Vehicle("testVin", "Ford", "Mustang", false,
-                5, 5.0, DrivingLicenseCategory.B);
+                5, 5.0, 122.0, DrivingLicenseCategory.B);
 
         Mockito.when(clientRepository.findByLogin("test")).thenReturn(Optional.of(testClient));
         Mockito.when(vehicleRepository.findByVin("testVin")).thenReturn(Optional.of(testVehicle));

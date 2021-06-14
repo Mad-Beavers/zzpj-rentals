@@ -11,7 +11,7 @@ create table if not exists admins
 );
 
 alter table admins
-    owner to "rental-hub-admin";
+    owner to "zmdjsbvtocpoyf";
 
 create table if not exists clients
 (
@@ -33,7 +33,7 @@ create table if not exists clients
 );
 
 alter table clients
-    owner to "rental-hub-admin";
+    owner to "zmdjsbvtocpoyf";
 
 create table if not exists clients_driving_license_categories
 (
@@ -44,26 +44,27 @@ create table if not exists clients_driving_license_categories
 );
 
 alter table clients_driving_license_categories
-    owner to "rental-hub-admin";
+    owner to "zmdjsbvtocpoyf";
 
 create table if not exists vehicles
 (
-    id              bigint not null
+    id               bigint not null
         constraint vehicles_pkey
             primary key,
-    available       boolean,
-    brand           varchar(255),
-    dlc             varchar(255),
-    engine_capacity double precision,
-    model           varchar(255),
-    number_of_seats integer,
-    vin             varchar(255)
+    available        boolean,
+    brand            varchar(255),
+    dlc              varchar(255),
+    engine_capacity  double precision,
+    model            varchar(255),
+    number_of_seats  integer,
+    daily_loan_price double precision,
+    vin              varchar(255)
         constraint vin_unique_constraint
             unique
 );
 
 alter table vehicles
-    owner to "rental-hub-admin";
+    owner to "zmdjsbvtocpoyf";
 
 create table if not exists rents
 (
@@ -85,7 +86,7 @@ create table if not exists rents
 );
 
 alter table rents
-    owner to "rental-hub-admin";
+    owner to "zmdjsbvtocpoyf";
 
 create table if not exists archived_rents
 (
@@ -102,5 +103,5 @@ create table if not exists archived_rents
 );
 
 alter table archived_rents
-    owner to "rental-hub-admin";
+    owner to "zmdjsbvtocpoyf";
 
