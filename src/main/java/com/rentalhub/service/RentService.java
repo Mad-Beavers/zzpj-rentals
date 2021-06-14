@@ -82,7 +82,7 @@ public class RentService {
         for (Rent rent : rentListFromDay) {
             int rating = 0;
             if ((rent.getClient().getDrivingLicenseCategories().containsKey(rent.getRentedVehicle().getDlc()))) {
-                rating = +rent.getClient().getDrivingLicenseCategories().get(rent.getRentedVehicle().getDlc()).getYear() - LocalDateTime.now().getYear();
+                rating =+ LocalDateTime.now().getYear() - rent.getClient().getDrivingLicenseCategories().get(rent.getRentedVehicle().getDlc()).getYear();
             }
 
             long daysBetween = Duration.between(rent.getStartDate().toLocalDate(), rent.getDeclaredFinishedDate().toLocalDate()).toDays();
