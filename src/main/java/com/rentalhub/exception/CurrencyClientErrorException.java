@@ -11,10 +11,6 @@ public class CurrencyClientErrorException extends RuntimeException {
         super(message);
     }
 
-    public CurrencyClientErrorException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
     public CurrencyClientErrorException(String message, String body) {
         super(message);
         this.body = body;

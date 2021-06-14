@@ -10,12 +10,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
@@ -23,10 +20,6 @@ import java.time.LocalDateTime;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
-import static org.springframework.test.web.client.response.MockRestResponseCreators.withBadRequest;
-import static org.springframework.test.web.client.response.MockRestResponseCreators.withServerError;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(locations = "classpath:application.yaml")
@@ -56,7 +49,7 @@ public class ExchangeRatesServiceTest {
 
     @Test
     void exchangeRatesServiceTest() throws Exception {
-        ExchangeRatesResponse testResponse = new ExchangeRatesResponse(true, 1l, "EUR",
+        ExchangeRatesResponse testResponse = new ExchangeRatesResponse(true, 1L, "EUR",
                 LocalDateTime.now().toString(), Map.of(
                 AcceptedCurrencies.EUR, 1.0,
                 AcceptedCurrencies.PLN, 4.23,
@@ -65,12 +58,12 @@ public class ExchangeRatesServiceTest {
         Mockito.when(exchangeRatesService.getResponse()).thenReturn(ResponseEntity.ok(testResponse));
         System.out.println(exchangeRatesService.getExchangeRate(AcceptedCurrencies.USD));
 
-        assertTrue(exchangeRatesService.getExchangeRate(AcceptedCurrencies.USD) == 3.55);
+        assertEquals(3.55, exchangeRatesService.getExchangeRate(AcceptedCurrencies.USD));
     }
 
     @Test
     void exchangeRatesPLNTest() throws Exception {
-        ExchangeRatesResponse testResponse = new ExchangeRatesResponse(true, 1l, "EUR",
+        ExchangeRatesResponse testResponse = new ExchangeRatesResponse(true, 1L, "EUR",
                 LocalDateTime.now().toString(), Map.of(
                 AcceptedCurrencies.EUR, 1.0,
                 AcceptedCurrencies.PLN, 4.23,
@@ -79,7 +72,7 @@ public class ExchangeRatesServiceTest {
         Mockito.when(exchangeRatesService.getResponse()).thenReturn(ResponseEntity.ok(testResponse));
         System.out.println(exchangeRatesService.getExchangeRate(AcceptedCurrencies.PLN));
 
-        assertTrue(exchangeRatesService.getExchangeRate(AcceptedCurrencies.PLN) == 1.0);
+        assertEquals(1.0, exchangeRatesService.getExchangeRate(AcceptedCurrencies.PLN));
     }
 
     @Test

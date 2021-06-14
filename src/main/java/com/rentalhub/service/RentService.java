@@ -42,7 +42,7 @@ public class RentService {
         if (vehicle.isEmpty()) {
             throw new NoSuchVehicleException("There is no vehicle like that in the database");
         }
-        if (vehicle.get().getAvailable() == false) {
+        if (!vehicle.get().getAvailable()) {
             throw new UnavailableVehicleException("This vehicle is already rented");
         }
         if (!client.get().getDrivingLicenseCategories().contains(vehicle.get().getDlc())) {

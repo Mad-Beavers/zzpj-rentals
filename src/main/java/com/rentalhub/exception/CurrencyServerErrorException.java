@@ -11,10 +11,6 @@ public class CurrencyServerErrorException extends RuntimeException {
         super(message);
     }
 
-    public CurrencyServerErrorException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
     public CurrencyServerErrorException(String message, String body) {
         super(message);
         this.body = body;
