@@ -2,6 +2,7 @@ package com.rentalhub.controller;
 
 import com.rentalhub.currencyService.AcceptedCurrencies;
 import com.rentalhub.dto.RentDto;
+import com.rentalhub.dto.VehicleDto;
 import com.rentalhub.exception.*;
 import com.rentalhub.mappers.RentMapper;
 import com.rentalhub.model.Rent;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -65,7 +67,7 @@ public class RentController {
     }
 
     @DeleteMapping("/close/{uuid}/{currencyAbbrev}")
-    public ResponseEntity<RentDto> endRent(@PathVariable String uuid, @PathVariable String currencyAbbrev) {
+    public ResponseEntity<RentDto> endRent(@PathVariable String uuid, @PathVariable String currencyAbbrev, int rate) {
         AcceptedCurrencies currency;
         try {
             currency = AcceptedCurrencies.valueOf(currencyAbbrev);
@@ -75,11 +77,17 @@ public class RentController {
 
         Optional<Rent> result;
         try {
-            result = service.endRent(UUID.fromString(uuid), currency);
+            result = service.endRent(UUID.fromString(uuid), currency, rate);
         } catch (CurrencyServiceException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
         return result.map(rent -> ResponseEntity.ok().body(mapper.toRentDto(rent)))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @PutMapping("/accept")
+    public ResponseEntity<Rent> acceptRent(LocalDateTime acceptDate, String  vehicleVin) throws UnavailableVehicleException, NoSuchClientException {
+        return ResponseEntity.ok().body(service.acceptRent(acceptDate, vehicleVin));
+    }
+
 }

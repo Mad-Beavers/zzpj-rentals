@@ -25,6 +25,7 @@ public class ArchivedRentService {
         this.exchangeRatesService = exchangeRatesService;
     }
 
+
     public Optional<ArchivedRent> getArchivedRent(UUID uuid) {
         return repository.findByUuid(uuid);
     }
@@ -33,10 +34,10 @@ public class ArchivedRentService {
         return repository.findAll();
     }
 
-    public void addArchivedRent(Rent rent, AcceptedCurrencies currency) throws CurrencyServiceException {
+    public void addArchivedRent(Rent rent, AcceptedCurrencies currency, int rate) throws CurrencyServiceException {
         Double exchangeRate = exchangeRatesService.getExchangeRate(currency);
         Double costInPln = 10.0;
-        ArchivedRent archivedRent = new ArchivedRent(rent.getUuid(), rent, costInPln, currency.name(), exchangeRate);
+        ArchivedRent archivedRent = new ArchivedRent(rent.getUuid(), rent, costInPln, currency.name(), exchangeRate, rate);
         repository.save(archivedRent);
     }
 }

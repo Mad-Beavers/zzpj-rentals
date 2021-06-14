@@ -17,4 +17,7 @@ public interface RentRepository extends JpaRepository<Rent, Long> {
     List<Rent> findByClient_Login(String login);
 
     List<Rent> findByRentedVehicle_Vin(String vin);
+
+
+
 }

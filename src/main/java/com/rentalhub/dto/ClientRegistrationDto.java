@@ -8,6 +8,8 @@ import com.rentalhub.validators.PhoneNumber;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.Set;
 
 @Valid
@@ -18,7 +20,7 @@ public record ClientRegistrationDto(
         @Name String firstName,
         @Name String secondName,
         @PhoneNumber String phoneNumber,
-        Set<DrivingLicenseCategory> drivingLicenseCategories
+        Map<DrivingLicenseCategory, LocalDateTime> drivingLicenseCategories
 ) {
 
 }

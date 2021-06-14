@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -29,11 +31,11 @@ public class Client extends User {
     private LocalDateTime registrationDate;
     private Boolean active;
 
-    @ElementCollection
-    @Enumerated(EnumType.STRING)
-    private Set<DrivingLicenseCategory> drivingLicenseCategories;
 
-    public Client(String passwordHash, String login, String email, String firstName, String lastName, String phoneNumber, Boolean active, Set<DrivingLicenseCategory> drivingLicenseCategories) {
+    @ElementCollection
+    private Map<DrivingLicenseCategory, LocalDateTime> drivingLicenseCategories;
+
+    public Client(String passwordHash, String login, String email, String firstName, String lastName, String phoneNumber, Boolean active, Map<DrivingLicenseCategory,LocalDateTime> drivingLicenseCategories) {
         super(passwordHash, login, email);
         this.firstName = firstName;
         this.lastName = lastName;
@@ -43,7 +45,7 @@ public class Client extends User {
         this.drivingLicenseCategories = drivingLicenseCategories;
     }
 
-    public Client(String passwordHash, String login, String email, String firstName, String lastName, String phoneNumber, Set<DrivingLicenseCategory> drivingLicenseCategories) {
+    public Client(String passwordHash, String login, String email, String firstName, String lastName, String phoneNumber, Map<DrivingLicenseCategory,LocalDateTime> drivingLicenseCategories) {
         super(passwordHash, login, email);
         this.firstName = firstName;
         this.lastName = lastName;

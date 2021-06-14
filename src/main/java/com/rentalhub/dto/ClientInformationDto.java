@@ -6,6 +6,8 @@ import com.rentalhub.validators.PhoneNumber;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.Set;
 
 public record ClientInformationDto (
@@ -15,6 +17,6 @@ public record ClientInformationDto (
         @Name String secondName,
         @PhoneNumber String phoneNumber,
         Boolean active,
-        Set<DrivingLicenseCategory> drivingLicenseCategories
+        Map<DrivingLicenseCategory, LocalDateTime> drivingLicenseCategories
 ) {
 }
