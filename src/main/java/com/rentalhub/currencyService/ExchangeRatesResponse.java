@@ -1,11 +1,15 @@
-package com.rentalhub.currency;
+package com.rentalhub.currencyService;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Map;
 
 @Getter
-public class ExchangeRatesRespose {
+@Setter
+@AllArgsConstructor
+public class ExchangeRatesResponse {
 
     private boolean success;
     private long timestamp;
