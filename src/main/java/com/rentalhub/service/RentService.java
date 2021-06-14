@@ -62,6 +62,14 @@ public class RentService {
         return rentRepository.findAll();
     }
 
+    public List<Rent> getRentsForVehicle(String vin) {
+        return rentRepository.findByRentedVehicle_Vin(vin);
+    }
+
+    public List<Rent> getRentsForClient(String login) {
+        return rentRepository.findByClient_Login(login);
+    }
+
     public Optional<Rent> endRent(UUID uuid, AcceptedCurrencies currency) throws CurrencyServiceException {
         Optional<Rent> rent = rentRepository.findByUuid(uuid);
         if (rent.isPresent()) {

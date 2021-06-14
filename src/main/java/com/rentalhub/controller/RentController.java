@@ -46,6 +46,18 @@ public class RentController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/forVehicle/{vin}")
+    public ResponseEntity<List<RentDto>> getRentForVehicle(@PathVariable String vin) {
+        List<Rent> result = service.getRentsForVehicle(vin);
+        return ResponseEntity.ok().body(mapper.toRentDtoList(result));
+    }
+
+    @GetMapping("/forClient/{login}")
+    public ResponseEntity<List<RentDto>> getRentForClient(@PathVariable String login) {
+        List<Rent> result = service.getRentsForClient(login);
+        return ResponseEntity.ok().body(mapper.toRentDtoList(result));
+    }
+
     @GetMapping("/all")
     public ResponseEntity<List<RentDto>> getRents() {
         List<Rent> result = service.getRents();
