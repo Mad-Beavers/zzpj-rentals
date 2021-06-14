@@ -25,6 +25,7 @@ public class ArchivedRentService {
         this.exchangeRatesService = exchangeRatesService;
     }
 
+
     public Optional<ArchivedRent> getArchivedRent(UUID uuid) {
         return repository.findByUuid(uuid);
     }

@@ -31,6 +31,8 @@ public class Rent {
     @NotNull
     private LocalDateTime startDate;
 
+    private boolean accepted;
+
     @NotNull
     private LocalDateTime declaredFinishedDate;
 
@@ -41,6 +43,7 @@ public class Rent {
         this.rentedVehicle = rentedVehicle;
         this.client = client;
         this.startDate = startDate;
+        this.accepted = false;
         this.declaredFinishedDate = declaredFinishedDate;
         this.actualFinishedDate = actualFinishedDate;
     }
@@ -50,6 +53,7 @@ public class Rent {
         this.rentedVehicle = rentedVehicle;
         this.client = client;
         this.startDate = startDate;
+        this.accepted = false;
         this.declaredFinishedDate = declaredFinishedDate;
     }
 }

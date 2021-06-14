@@ -14,11 +14,11 @@ public class InMemoryVehicleRepository {
     public InMemoryVehicleRepository() {
         vehicles = new HashSet<>();
 
-        vehicles.add(new Vehicle("1HGCM82633A004352", "Ford", "Mondeo",
-                4, 2.0, 123.0, DrivingLicenseCategory.B));
-
-        vehicles.add(new Vehicle("2HGCM82633A004352", "Ford", "Mondeo",
-                4, 2.0, 123.0, DrivingLicenseCategory.B));
+//        vehicles.add(new Vehicle("1HGCM82633A004352", "Ford", "Mondeo",
+//                4, 2.0, 123.0, DrivingLicenseCategory.B));
+//
+//        vehicles.add(new Vehicle("2HGCM82633A004352", "Ford", "Mondeo",
+//                4, 2.0, 123.0, DrivingLicenseCategory.B));
 
     }
 

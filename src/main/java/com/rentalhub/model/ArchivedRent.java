@@ -30,12 +30,19 @@ public class ArchivedRent {
     @NotEmpty
     private String currency;
 
+    @NotEmpty
+    private Boolean delayed;
+
     @PositiveOrZero
     private Double plnToCurrency;
 
-    public ArchivedRent(UUID uuid, Rent rent, Double costInPln, String currency, Double plnToCurrency) {
+    @NotEmpty
+    private int rentRating;
+
+    public ArchivedRent(UUID uuid, Rent rent, Double costInPln, String currency, Double plnToCurrency, int rentRating) {
         this.uuid = uuid;
         this.rent = rent;
+        this.rentRating = rentRating;
         this.costInPln = costInPln;
         this.currency = currency;
         this.plnToCurrency = plnToCurrency;
