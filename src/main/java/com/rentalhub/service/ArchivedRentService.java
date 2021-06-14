@@ -35,7 +35,8 @@ public class ArchivedRentService {
 
     public void addArchivedRent(Rent rent, AcceptedCurrencies currency) throws CurrencyServiceException {
         Double exchangeRate = exchangeRatesService.getExchangeRate(currency);
-        Double costInPln = 10.0;
+        Double costInPln = CostCalculator.calculateCost(rent.getStartDate(), rent.getDeclaredFinishedDate(),
+                rent.getDeclaredFinishedDate(), rent.getRentedVehicle().getDailyLoanPrice());
         ArchivedRent archivedRent = new ArchivedRent(rent.getUuid(), rent, costInPln, currency.name(), exchangeRate);
         repository.save(archivedRent);
     }
