@@ -1,13 +1,9 @@
 package com.rentalhub.repository;
 
-import com.rentalhub.model.Admin;
 import com.rentalhub.model.Client;
-import com.rentalhub.model.DrivingLicenseCategory;
 import com.rentalhub.model.User;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -32,5 +28,26 @@ public class InMemoryUserRepository {
 
     public void addClient(User user) {
         this.users.add(user);
+    }
+
+    public void editUser(Client client) {
+        if(users.removeIf(user1 -> client.getLogin().equals(user1.getLogin()))) {
+            users.add(client);
+        }
+    }
+    public void changeActivity(String login, boolean isActive) {
+        Client client = (Client) users.stream().filter(user -> user.getLogin().equals(login)).findAny().get();
+        client.setActive(isActive);
+    }
+
+
+    public Client getUser(String login) {
+        if(users.stream().anyMatch(user -> user.getLogin().equals(login))) {
+            return (Client) users.stream().filter(user -> user.getLogin().equals(login)).findAny().get();
+        } else {
+            throw new NullPointerException("This user doesn't exists");
+
+        }
+
     }
 }
