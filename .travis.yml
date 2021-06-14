@@ -4,6 +4,5 @@ jdk:
 
 script: ./mvnw clean install
 
-
 notifications:
   email: arturradiuk@gmail.com
