@@ -11,6 +11,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
@@ -57,7 +60,7 @@ class AuthControllerIT {
     }
 
     private ClientRegistrationDto getClientRegistrationDto() {
-        Set<DrivingLicenseCategory> dlc = Set.of(DrivingLicenseCategory.B, DrivingLicenseCategory.B1);
+        Map<DrivingLicenseCategory, LocalDateTime> dlc =  Map.of(DrivingLicenseCategory.B1, LocalDateTime.now());
         return new ClientRegistrationDto(login, email,
                 password, "Lolek", "Bolek", "+48123123123", dlc);
     }

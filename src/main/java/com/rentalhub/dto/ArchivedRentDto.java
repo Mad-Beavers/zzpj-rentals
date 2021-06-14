@@ -11,6 +11,7 @@ public record ArchivedRentDto (
     @NotEmpty Rent rent,
     @NotEmpty Double costInPln,
     @NotEmpty String currency,
-    @NotEmpty Double plnToCurrency
+    @NotEmpty Double plnToCurrency,
+    Integer rate
 ) {
 }

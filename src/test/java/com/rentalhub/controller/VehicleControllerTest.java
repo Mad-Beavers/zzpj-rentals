@@ -3,6 +3,7 @@ package com.rentalhub.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rentalhub.dto.VehicleDto;
 import com.rentalhub.model.DrivingLicenseCategory;
+import com.rentalhub.model.VehicleType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ class VehicleControllerTest {
     @Test
     void createAndGetVehicleTest() throws Exception {
         String vin = randomAlphanumeric(12);
-        VehicleDto vehicle = new VehicleDto(vin, "Mazda", "RX-7", 5, 2.4, true, DrivingLicenseCategory.B);
+        VehicleDto vehicle = new VehicleDto(vin, "Mazda", "RX-7", 5, 2.4, true, VehicleType.sport, DrivingLicenseCategory.B);
         mvc.perform(post("/api/vehicle/create-vehicle")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(vehicle)))
@@ -53,7 +54,7 @@ class VehicleControllerTest {
         VehicleDto originalVehicle = getVehicleByVin(vehicle.vin());
 
         String newBrand = "newBrand";
-        VehicleDto updatedVehicle = new VehicleDto(vehicle.vin(), newBrand, vehicle.model(), vehicle.numberOfSeats(), vehicle.engineCapacity(), true, vehicle.dlc());
+        VehicleDto updatedVehicle = new VehicleDto(vehicle.vin(), newBrand, vehicle.model(), vehicle.numberOfSeats(), vehicle.engineCapacity(), true, VehicleType.sport, vehicle.dlc());
 
         mvc.perform(put("/api/vehicle/update-vehicle")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -79,7 +80,7 @@ class VehicleControllerTest {
     }
 
     private VehicleDto postSampleVehicle() throws Exception {
-        VehicleDto vehicle = new VehicleDto(randomAlphanumeric(12), "Mazda", "RX-7", 5, 2.4, true, DrivingLicenseCategory.B);
+        VehicleDto vehicle = new VehicleDto(randomAlphanumeric(12), "Mazda", "RX-7", 5, 2.4, true, VehicleType.sport, DrivingLicenseCategory.B);
         mvc.perform(post("/api/vehicle/create-vehicle")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(vehicle)));

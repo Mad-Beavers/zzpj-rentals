@@ -37,9 +37,9 @@ public class ArchivedRent {
     private Double plnToCurrency;
 
     @NotEmpty
-    private int rentRating;
+    private Integer rentRating;
 
-    public ArchivedRent(UUID uuid, Rent rent, Double costInPln, String currency, Double plnToCurrency, int rentRating) {
+    public ArchivedRent(UUID uuid, Rent rent, Double costInPln, String currency, Double plnToCurrency, Integer rentRating) {
         this.uuid = uuid;
         this.rent = rent;
         this.rentRating = rentRating;

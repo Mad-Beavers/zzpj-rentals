@@ -34,11 +34,11 @@ public class ArchivedRentService {
         return repository.findAll();
     }
 
-    public void addArchivedRent(Rent rent, AcceptedCurrencies currency) throws CurrencyServiceException {
+    public void addArchivedRent(Rent rent, AcceptedCurrencies currency, Integer rate) throws CurrencyServiceException {
         Double exchangeRate = exchangeRatesService.getExchangeRate(currency);
         Double costInPln = CostCalculator.calculateCost(rent.getStartDate(), rent.getDeclaredFinishedDate(),
                 rent.getDeclaredFinishedDate(), rent.getRentedVehicle().getDailyLoanPrice());
-        ArchivedRent archivedRent = new ArchivedRent(rent.getUuid(), rent, costInPln, currency.name(), exchangeRate);
+        ArchivedRent archivedRent = new ArchivedRent(rent.getUuid(), rent, costInPln, currency.name(), exchangeRate, rate);
         repository.save(archivedRent);
     }
 }

@@ -13,8 +13,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -33,15 +35,15 @@ public class ArchivedRentControllerTest {
     LocalDateTime endDate = LocalDateTime.now().plusDays(7);
 
     Client testClient = new Client("testHash", "test", "test@test.com", "test",
-            "test", "test", Set.of(DrivingLicenseCategory.B));
+            "test", "test", Map.of(DrivingLicenseCategory.B, LocalDateTime.now()));
 
-    Vehicle testVehicle = new Vehicle("testVin", "Ford", "Mustang", 5, 5.0, 123.0,
+    Vehicle testVehicle = new Vehicle("testVin", "Ford", "Mustang", 5, 5.0, 123.0,VehicleType.muscle,
             DrivingLicenseCategory.B);
 
     Rent testRent = new Rent(testVehicle, testClient, startDate, endDate);
 
     ArchivedRent archivedRent = new ArchivedRent(testRent.getUuid(), testRent, 10.0,
-            AcceptedCurrencies.EUR.name(), 4.0);
+            AcceptedCurrencies.EUR.name(), 4.0, 4);
 
     @Test
     void getArchivedRentTest() throws Exception {

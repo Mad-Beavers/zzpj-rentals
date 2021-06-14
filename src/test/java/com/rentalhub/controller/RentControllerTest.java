@@ -7,6 +7,7 @@ import com.rentalhub.repository.ArchivedRentRepository;
 import com.rentalhub.repository.RentRepository;
 import com.rentalhub.repository.VehicleRepository;
 import com.rentalhub.repository.subRepos.ClientRepository;
+import org.apache.tomcat.jni.Local;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -19,10 +20,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -54,9 +52,9 @@ public class RentControllerTest {
     LocalDateTime endDate = LocalDateTime.now().plusDays(7);
 
     Client testClient = new Client("testHash", "test", "test@test.com", "test",
-            "test", "test", Set.of(DrivingLicenseCategory.B));
+            "test", "test", Map.of(DrivingLicenseCategory.B, LocalDateTime.now()));
 
-    Vehicle testVehicle = new Vehicle("testVin", "Ford", "Mustang", 5, 5.0, 123.0,
+    Vehicle testVehicle = new Vehicle("testVin", "Ford", "Mustang", 5, 5.0, 123.0,VehicleType.sport,
             DrivingLicenseCategory.B);
 
     Rent testRent = new Rent(testVehicle, testClient, startDate, endDate);
@@ -87,7 +85,7 @@ public class RentControllerTest {
         UUID uuid = UUID.randomUUID();
 
         Vehicle testVehicle = new Vehicle("testVin", "Ford", "Mustang", false,
-                5, 5.0, 122.0, DrivingLicenseCategory.B);
+                5, 5.0, 122.0,VehicleType.sport, DrivingLicenseCategory.B);
 
         Mockito.when(clientRepository.findByLogin("test")).thenReturn(Optional.of(testClient));
         Mockito.when(vehicleRepository.findByVin("testVin")).thenReturn(Optional.of(testVehicle));
@@ -110,7 +108,7 @@ public class RentControllerTest {
         UUID uuid = UUID.randomUUID();
 
         Client testClient = new Client("testHash", "test", "test@test.com", "test",
-                "test", "test", Set.of(DrivingLicenseCategory.A));
+                "test", "test", Map.of(DrivingLicenseCategory.A, LocalDateTime.now()));
 
         Mockito.when(clientRepository.findByLogin("test")).thenReturn(Optional.of(testClient));
         Mockito.when(vehicleRepository.findByVin("testVin")).thenReturn(Optional.of(testVehicle));

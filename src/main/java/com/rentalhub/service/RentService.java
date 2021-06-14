@@ -167,7 +167,7 @@ public class RentService {
         return rentRepository.findByClient_Login(login);
     }
 
-    public Optional<Rent> endRent(UUID uuid, AcceptedCurrencies currency, int rate) throws CurrencyServiceException {
+    public Optional<Rent> endRent(UUID uuid, AcceptedCurrencies currency, Integer rate) throws CurrencyServiceException, NoSuchVehicleException {
         Optional<Rent> rent = rentRepository.findByUuid(uuid);
         if (rent.isPresent()) {
             archivedRentService.addArchivedRent(rent.get(), currency, rate);

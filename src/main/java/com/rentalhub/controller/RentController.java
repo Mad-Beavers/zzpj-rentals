@@ -67,7 +67,7 @@ public class RentController {
     }
 
     @DeleteMapping("/close/{uuid}/{currencyAbbrev}")
-    public ResponseEntity<RentDto> endRent(@PathVariable String uuid, @PathVariable String currencyAbbrev, int rate) {
+    public ResponseEntity<RentDto> endRent(@PathVariable String uuid, @PathVariable String currencyAbbrev, Integer rate) {
         AcceptedCurrencies currency;
         try {
             currency = AcceptedCurrencies.valueOf(currencyAbbrev);
@@ -78,7 +78,7 @@ public class RentController {
         Optional<Rent> result;
         try {
             result = service.endRent(UUID.fromString(uuid), currency, rate);
-        } catch (CurrencyServiceException e) {
+        } catch (CurrencyServiceException | NoSuchVehicleException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
         return result.map(rent -> ResponseEntity.ok().body(mapper.toRentDto(rent)))
