@@ -1,7 +1,7 @@
 package com.rentalhub.service;
 
 import com.rentalhub.currencyService.AcceptedCurrencies;
-import com.rentalhub.currencyService.ExchangeRatesReceiver;
+import com.rentalhub.currencyService.ExchangeRatesService;
 import com.rentalhub.exception.CurrencyServiceException;
 import com.rentalhub.model.ArchivedRent;
 import com.rentalhub.model.Rent;
@@ -17,12 +17,12 @@ import java.util.UUID;
 public class ArchivedRentService {
 
     private ArchivedRentRepository repository;
-    private ExchangeRatesReceiver exchangeRatesReceiver;
+    private ExchangeRatesService exchangeRatesService;
 
     @Autowired
-    public ArchivedRentService(ArchivedRentRepository repository, ExchangeRatesReceiver exchangeRatesReceiver) {
+    public ArchivedRentService(ArchivedRentRepository repository, ExchangeRatesService exchangeRatesService) {
         this.repository = repository;
-        this.exchangeRatesReceiver = exchangeRatesReceiver;
+        this.exchangeRatesService = exchangeRatesService;
     }
 
     public Optional<ArchivedRent> getArchivedRent(UUID uuid) {
@@ -34,7 +34,7 @@ public class ArchivedRentService {
     }
 
     public void addArchivedRent(Rent rent, AcceptedCurrencies currency) throws CurrencyServiceException {
-        Double exchangeRate = exchangeRatesReceiver.getExchangeRate(currency);
+        Double exchangeRate = exchangeRatesService.getExchangeRate(currency);
         Double costInPln = 10.0;
         ArchivedRent archivedRent = new ArchivedRent(rent.getUuid(), rent, costInPln, currency.name(), exchangeRate);
         repository.save(archivedRent);

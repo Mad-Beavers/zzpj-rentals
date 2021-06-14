@@ -2,7 +2,7 @@ package com.rentalhub.controller;
 
 import com.rentalhub.currencyService.AcceptedCurrencies;
 import com.rentalhub.dto.RentDto;
-import com.rentalhub.exception.CurrencyServiceException;
+import com.rentalhub.exception.*;
 import com.rentalhub.mappers.RentMapper;
 import com.rentalhub.model.Rent;
 import com.rentalhub.service.RentService;
@@ -32,7 +32,9 @@ public class RentController {
     public ResponseEntity<Rent> createRent(@RequestBody RentDto dto) {
         try {
             return ResponseEntity.ok(service.addRent(dto));
-        } catch (RuntimeException e) {
+        } catch (InsufficientClientDlcException | UnavailableVehicleException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        } catch (NoSuchClientException | NoSuchVehicleException e) {
             return ResponseEntity.notFound().build();
         }
     }
@@ -50,7 +52,7 @@ public class RentController {
         return ResponseEntity.ok().body(mapper.toRentDtoList(result));
     }
 
-    @DeleteMapping("/close/{uuid}/{currency}")
+    @DeleteMapping("/close/{uuid}/{currencyAbbrev}")
     public ResponseEntity<RentDto> endRent(@PathVariable String uuid, @PathVariable String currencyAbbrev) {
         AcceptedCurrencies currency;
         try {
@@ -59,7 +61,7 @@ public class RentController {
             return ResponseEntity.notFound().build();
         }
 
-        Optional<Rent> result = null;
+        Optional<Rent> result;
         try {
             result = service.endRent(UUID.fromString(uuid), currency);
         } catch (CurrencyServiceException e) {

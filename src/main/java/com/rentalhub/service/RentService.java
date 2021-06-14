@@ -2,13 +2,11 @@ package com.rentalhub.service;
 
 import com.rentalhub.currencyService.AcceptedCurrencies;
 import com.rentalhub.dto.RentDto;
-import com.rentalhub.exception.CurrencyServiceException;
+import com.rentalhub.exception.*;
 import com.rentalhub.model.Client;
 import com.rentalhub.model.Rent;
 import com.rentalhub.model.Vehicle;
 import com.rentalhub.repository.RentRepository;
-import com.rentalhub.repository.VehicleRepository;
-import com.rentalhub.repository.subRepos.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -33,14 +31,22 @@ public class RentService {
         this.archivedRentService = archivedRentService;
     }
 
-    public Rent addRent(RentDto dto) {
+    public Rent addRent(RentDto dto) throws UnavailableVehicleException, InsufficientClientDlcException,
+            NoSuchClientException, NoSuchVehicleException {
+
         Optional<Vehicle> vehicle = vehicleService.getVehicle(dto.vin());
         Optional<Client> client = userService.getClient(dto.login());
-        if (client.isEmpty() || vehicle.isEmpty()) {
-            throw new RuntimeException();
+        if (client.isEmpty()) {
+            throw new NoSuchClientException("There is no client like that in the database");
+        }
+        if (vehicle.isEmpty()) {
+            throw new NoSuchVehicleException("There is no vehicle like that in the database");
         }
         if (vehicle.get().getAvailable() == false) {
-            throw new RuntimeException();
+            throw new UnavailableVehicleException("This vehicle is already rented");
+        }
+        if (!client.get().getDrivingLicenseCategories().contains(vehicle.get().getDlc())) {
+            throw new InsufficientClientDlcException("Client does not have required driving license category");
         }
         vehicleService.changeAvailability(dto.vin(), false);
         Rent rent = new Rent(vehicle.get(), client.get(), dto.startDate(), dto.declaredFinishedDate(), dto.actualFinishedDate());
