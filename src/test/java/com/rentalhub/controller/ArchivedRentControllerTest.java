@@ -35,7 +35,7 @@ public class ArchivedRentControllerTest {
     Client testClient = new Client("testHash", "test", "test@test.com", "test",
             "test", "test", Set.of(DrivingLicenseCategory.B));
 
-    Vehicle testVehicle = new Vehicle("testVin", "Ford", "Mustang", 5, 5.0,
+    Vehicle testVehicle = new Vehicle("testVin", "Ford", "Mustang", 5, 5.0, 123.0,
             DrivingLicenseCategory.B);
 
     Rent testRent = new Rent(testVehicle, testClient, startDate, endDate);

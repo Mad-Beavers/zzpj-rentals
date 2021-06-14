@@ -34,27 +34,31 @@ public class Vehicle {
     @Positive
     private Double engineCapacity;
 
+    @Positive
+    private Double dailyLoanPrice;
+
     @Enumerated(EnumType.STRING)
     private DrivingLicenseCategory dlc;
 
-    public Vehicle(String vin, String brand, String model, Boolean available,
-                   Integer numberOfSeats, Double engineCapacity, DrivingLicenseCategory dlc) {
+    public Vehicle(String vin, String brand, String model, Boolean available, Integer numberOfSeats, Double engineCapacity, Double dailyLoanPrice, DrivingLicenseCategory dlc) {
         this.vin = vin;
         this.brand = brand;
         this.model = model;
         this.available = available;
         this.numberOfSeats = numberOfSeats;
         this.engineCapacity = engineCapacity;
+        this.dailyLoanPrice = dailyLoanPrice;
         this.dlc = dlc;
     }
 
-    public Vehicle(String vin, String brand, String model, Integer numberOfSeats, Double engineCapacity, DrivingLicenseCategory dlc) {
+    public Vehicle(String vin, String brand, String model, Integer numberOfSeats, Double engineCapacity, Double dailyLoanPrice, DrivingLicenseCategory dlc) {
         this.vin = vin;
         this.brand = brand;
         this.model = model;
+        this.available = true;
         this.numberOfSeats = numberOfSeats;
         this.engineCapacity = engineCapacity;
+        this.dailyLoanPrice = dailyLoanPrice;
         this.dlc = dlc;
-        this.available = true;
     }
 }
