@@ -39,7 +39,7 @@ public class ExchangeRatesService {
             Map<AcceptedCurrencies, Double> response = getResponse().getBody().getRates();
             double currencyToEUR = response.get(currency);
             double plnToEUR = response.get(AcceptedCurrencies.PLN);
-            return round(currencyToEUR / plnToEUR, 2);
+            return round(plnToEUR / currencyToEUR, 2);
         } catch (CurrencyClientErrorException | CurrencyServerErrorException | NullPointerException e) {
             throw new CurrencyServiceException("Unable to receive exchange rates", e);
         }
