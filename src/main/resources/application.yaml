@@ -4,9 +4,9 @@ spring:
     platform: postgres
     driverClassName: org.postgresql.Driver
 
-    url: jdbc:postgresql://localhost:5432/rentalHub
-    username: rentalHubAdmin
-    password: jajko123
+    url: jdbc:postgresql://ec2-176-34-105-15.eu-west-1.compute.amazonaws.com:5432/d4j0h6n8act2bl
+    username: zmdjsbvtocpoyf
+    password: 403fa3e20d7d93678833691bc707d41a0960e24ca6bb552c5eab61032d59fbdd
 
     hikari:
       connection-timeout: 20000
