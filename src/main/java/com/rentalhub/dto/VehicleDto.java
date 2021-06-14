@@ -10,6 +10,7 @@ public record VehicleDto (
          String model,
          Integer numberOfSeats,
          Double engineCapacity,
+         Boolean available,
          DrivingLicenseCategory dlc) {
 
 }

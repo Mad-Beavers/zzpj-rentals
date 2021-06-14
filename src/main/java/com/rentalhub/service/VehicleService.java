@@ -20,7 +20,8 @@ public class VehicleService {
     }
 
     public Vehicle addVehicle(Vehicle vehicle) {
-        return vehicleRepository.save(vehicle);
+        Vehicle save = vehicleRepository.saveAndFlush(vehicle);
+        return save;
     }
 
     public Vehicle editVehicle(Vehicle vehicle) throws NoSuchVehicleException {

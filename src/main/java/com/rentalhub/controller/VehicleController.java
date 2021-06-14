@@ -6,6 +6,7 @@ import com.rentalhub.mappers.VehicleMapper;
 import com.rentalhub.model.Vehicle;
 import com.rentalhub.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,7 @@ public class VehicleController {
 
     @PostMapping("/create-vehicle")
     public ResponseEntity<Vehicle> createVehicle(@RequestBody VehicleDto vehicleDto) {
-        return ResponseEntity.ok(vehicleService.addVehicle(vehicleMapper.toVehicle(vehicleDto)));
+        return ResponseEntity.status(HttpStatus.CREATED).body(vehicleService.addVehicle(vehicleMapper.toVehicle(vehicleDto)));
     }
 
     @PutMapping("/update-vehicle")
@@ -37,7 +38,7 @@ public class VehicleController {
     }
 
     @PutMapping("/change-state/{vin}/{newState}")
-    public ResponseEntity<Vehicle> block(@PathVariable String vin, @PathVariable boolean newState) throws NoSuchVehicleException {
+    public ResponseEntity<Vehicle> changeAvailability(@PathVariable String vin, @PathVariable boolean newState) throws NoSuchVehicleException {
         return ResponseEntity.ok(vehicleService.changeAvailability(vin, newState));
     }
 
