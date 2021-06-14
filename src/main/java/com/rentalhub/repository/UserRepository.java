@@ -43,5 +43,4 @@ public class UserRepository {
     public void saveAll(Iterable<User> users) {
         users.forEach(this::save);
     }
-
 }

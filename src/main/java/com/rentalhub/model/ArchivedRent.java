@@ -1,6 +1,5 @@
 package com.rentalhub.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,7 +15,6 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity(name = "archived_rents")
 public class ArchivedRent {
     @Id
@@ -36,4 +34,12 @@ public class ArchivedRent {
 
     @PositiveOrZero
     private Double plnToCurrency;
+
+    public ArchivedRent(UUID uuid, Rent rent, Double costInPln, String currency, Double plnToCurrency) {
+        this.uuid = uuid;
+        this.rent = rent;
+        this.costInPln = costInPln;
+        this.currency = currency;
+        this.plnToCurrency = plnToCurrency;
+    }
 }
