@@ -9,7 +9,6 @@ import com.rentalhub.model.Rent;
 import com.rentalhub.model.Vehicle;
 import com.rentalhub.repository.ArchivedRentRepository;
 import com.rentalhub.repository.RentRepository;
-import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,20 +24,20 @@ public class RentService {
     private final VehicleService vehicleService;
     private final UserService userService;
     private final ArchivedRentService archivedRentService;
-    private ArchivedRentRepository repository;
+    private final ArchivedRentRepository repository;
 
     @Autowired
-    public RentService(RentRepository rentRepository, VehicleService vehicleService, UserService userService, ArchivedRentService archivedRentService) {
+    public RentService(RentRepository rentRepository, VehicleService vehicleService, UserService userService, ArchivedRentService archivedRentService, ArchivedRentRepository repository) {
         this.rentRepository = rentRepository;
         this.vehicleService = vehicleService;
         this.userService = userService;
         this.archivedRentService = archivedRentService;
+        this.repository = repository;
     }
 
 
-    public Rent acceptRentAlgorithm(LocalDateTime acceptDate, String vehicleVin) throws UnavailableVehicleException, NoSuchClientException {
+    public Rent acceptRent(LocalDateTime acceptDate, String vehicleVin) throws UnavailableVehicleException, NoSuchClientException, NoSuchRentException {
         List<Rent> rentList = rentRepository.findByRentedVehicle_Vin(vehicleVin);
-
 
         if (rentList.stream().anyMatch(rent -> rent.isAccepted() &&
                 (acceptDate.toLocalDate().isBefore(rent.getDeclaredFinishedDate().plusDays(1).toLocalDate()) &&
@@ -46,7 +45,9 @@ public class RentService {
             throw new UnavailableVehicleException("Vehicle is already reserved this day");
         }
 
-        List<Rent> rentListFromDay = rentList.stream().filter(rent -> rent.getStartDate().toLocalDate().equals(acceptDate.toLocalDate())).collect(Collectors.toList());
+        List<Rent> rentListFromDay = rentList.stream()
+                .filter(rent -> rent.getStartDate().toLocalDate().equals(acceptDate.toLocalDate()))
+                .collect(Collectors.toList());
 
         if (rentListFromDay.isEmpty()) {
             throw new NoSuchClientException("There is no rent in rent list");
@@ -65,7 +66,6 @@ public class RentService {
 //            rentListFromDay.remove(indexList.get(i));
 //        }
 
-
         rentListFromDay.removeIf(rent -> rentList.stream()
                 .anyMatch(var -> var.isAccepted() &&
                         rent.getDeclaredFinishedDate().toLocalDate().isBefore(var.getDeclaredFinishedDate().plusDays(1).toLocalDate()) &&
@@ -82,26 +82,26 @@ public class RentService {
         for (Rent rent : rentListFromDay) {
             int rating = 0;
             if ((rent.getClient().getDrivingLicenseCategories().containsKey(rent.getRentedVehicle().getDlc()))) {
-                rating =+ LocalDateTime.now().getYear() - rent.getClient().getDrivingLicenseCategories().get(rent.getRentedVehicle().getDlc()).getYear();
+                rating += (LocalDateTime.now().getYear() - rent.getClient().getDrivingLicenseCategories().get(rent.getRentedVehicle().getDlc()).getYear()) * 5;
             }
 
-            long daysBetween = Duration.between(rent.getStartDate().toLocalDate(), rent.getDeclaredFinishedDate().toLocalDate()).toDays();
+            long daysBetween = Duration.between(rent.getStartDate(), rent.getDeclaredFinishedDate()).toDays();
 
             rating += daysBetween;
 
-            List<ArchivedRent> archivedRent = repository.findArchivedRentByRent_Client(rent.getClient());
-            if (!archivedRent.isEmpty()) {
-                for (ArchivedRent var : archivedRent) {
+            List<ArchivedRent> clientArchivedRents = repository.findArchivedRentByRent_Client(rent.getClient());
+
+
+            if (!clientArchivedRents.isEmpty()) {
+                for (ArchivedRent var : clientArchivedRents) {
                     rating += var.getRentRating();
                     if (var.getRent().getRentedVehicle().getVehicleType().equals(rent.getRentedVehicle().getVehicleType())) {
                         rating += 5;
                     }
                 }
-                for (ArchivedRent var : archivedRent) {
-                    if (var.getDelayed()) {
-                        if (rating != 0) {
-                            rating--;
-                        }
+                for (ArchivedRent var : clientArchivedRents) {
+                    if (var.getDelayed() && rating != 0) {
+                        rating--;
                     }
                 }
 
@@ -113,19 +113,19 @@ public class RentService {
         int rate = 0;
         Rent resultRent = null;
         for (Map.Entry<Rent, Integer> var : rentWithRating.entrySet()) {
-            if(var.getValue() >= rate) {
+            if (var.getValue() >= rate) {
                 rate = var.getValue();
                 resultRent = var.getKey();
             }
         }
+
+        if (resultRent == null) {
+            throw new NoSuchRentException("No rent matches criteria");
+        }
+
         resultRent.setAccepted(true);
         rentRepository.save(resultRent);
         return resultRent;
-    }
-
-
-    public Rent acceptRent(LocalDateTime acceptDate, String vehicleVin) throws UnavailableVehicleException, NoSuchClientException {
-        return acceptRentAlgorithm(acceptDate, vehicleVin);
     }
 
     public Rent addRent(RentDto dto) throws UnavailableVehicleException, InsufficientClientDlcException,

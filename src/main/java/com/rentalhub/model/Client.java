@@ -9,6 +9,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -33,11 +34,11 @@ public class Client extends User {
     private String phoneNumber;
 
     private LocalDateTime registrationDate;
-    private Boolean active;
+    private Boolean active = true;
 
 
-    @ElementCollection
-    private Map<DrivingLicenseCategory, LocalDateTime> drivingLicenseCategories;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Map<DrivingLicenseCategory, LocalDateTime> drivingLicenseCategories = new HashMap<>();
 
     public Client(String passwordHash, String login, String email, String firstName, String lastName, String phoneNumber, Boolean active, Map<DrivingLicenseCategory,LocalDateTime> drivingLicenseCategories) {
         super(passwordHash, login, email);

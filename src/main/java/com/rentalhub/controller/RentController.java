@@ -86,7 +86,7 @@ public class RentController {
     }
 
     @PutMapping("/accept")
-    public ResponseEntity<Rent> acceptRent(LocalDateTime acceptDate, String  vehicleVin) throws UnavailableVehicleException, NoSuchClientException {
+    public ResponseEntity<Rent> acceptRent(LocalDateTime acceptDate, String  vehicleVin) throws UnavailableVehicleException, NoSuchClientException, NoSuchRentException {
         return ResponseEntity.ok().body(service.acceptRent(acceptDate, vehicleVin));
     }
 

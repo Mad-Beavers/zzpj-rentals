@@ -18,7 +18,7 @@ public record ClientRegistrationDto(
         @Email String email,
         @Password String password,
         @Name String firstName,
-        @Name String secondName,
+        @Name String lastName,
         @PhoneNumber String phoneNumber,
         Map<DrivingLicenseCategory, LocalDateTime> drivingLicenseCategories
 ) {
