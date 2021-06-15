@@ -59,7 +59,6 @@ public class RentControllerTest {
 
     Rent testRent = new Rent(testVehicle, testClient, startDate, endDate);
 
-
     @Test
     void createValidRentTest() throws Exception {
         UUID uuid = UUID.randomUUID();
